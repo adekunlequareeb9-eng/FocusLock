@@ -1,0 +1,275 @@
+name: Set up project
+
+# Run this once. It adds every project file to your repo and makes
+# a signing key just for you. Then run "Build APK".
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Write the project files
+        run: |
+          set -e
+          if [ -f app/build.gradle.kts ]; then
+            echo "Already set up. Nothing to do."
+            exit 0
+          fi
+          cat > '.gitignore' <<'__PHONE_APK_EOF__'
+          .gradle/
+          build/
+          app/build/
+          local.properties
+          *.iml
+          .idea/
+          build.log
+          phone-app.apk
+          __PHONE_APK_EOF__
+          cat > 'README.md' <<'__PHONE_APK_EOF__'
+          # Phone-Only APK Template
+
+          Build an Android app using only your phone. You edit code on GitHub, GitHub builds the APK for free, and you tap one link to download and install it. No computer, no Android Studio, nothing to install.
+
+          ## First build
+
+          Your project files and signing key were created by the **Set up project** workflow. To get your first APK:
+
+          1. Tap the **Actions** tab, tap **Build APK**, then **Run workflow**, then the green **Run workflow** button. Wait about 5 to 8 minutes.
+          2. When it turns green, go back to the repo's main page and tap **Releases** (right side, or the **Code** tab on mobile). Open **Latest build** and tap **phone-app.apk** to download it.
+          3. Open the downloaded file and install it. Android will ask you to allow installs from your browser. Allow it for this one time. Play Protect may show a warning for unknown apps; for your own app, choose to install anyway.
+
+          That's it. You now have a working app that shows "It works!".
+
+          ## Everyday loop
+
+          1. Open a file on GitHub, tap the pencil icon, change the code, and tap **Commit changes**.
+          2. The build starts by itself. Check the **Actions** tab for the green tick.
+          3. Download the new `phone-app.apk` from **Releases** and install it over the old one. Your app's data stays, because every build uses the same signing key.
+
+          To add a new file: **Add file**, then **Create new file**. Type the full path in the name box, like `app/src/main/java/com/example/phoneapk/Notes.kt`. Typing `/` makes folders.
+
+          ## When the build fails (it will, sometimes)
+
+          1. Open **Actions** and tap the run with the red cross.
+          2. Tap the run's summary page. Near the top is a box titled **Build failed**, with the important error lines already picked out.
+          3. Copy that box and paste it to your AI chat with this message:
+
+             > My Android (Kotlin, Gradle) build failed on GitHub Actions. Here is the error. Tell me which file to change and give me the **full corrected file**, so I can paste it over the old one.
+
+          4. Paste the fixed file in, commit, and the build runs again.
+
+          If the box is empty, open the run, tap the **Build the APK** step, and copy the last 60 lines instead.
+
+          ## What is in here
+
+          | File | What it does |
+          |---|---|
+          | `.github/workflows/build.yml` | The build instructions GitHub follows. You rarely change this. |
+          | `app/src/main/java/.../MainActivity.kt` | Your app's code. Start here. |
+          | `app/src/main/res/values/strings.xml` | The app's name on the home screen. |
+          | `app/src/main/AndroidManifest.xml` | App permissions. Add things like internet access here. |
+          | `app/build.gradle.kts` | App settings: package name, version, libraries. |
+          | `.github/workflows/setup.yml` | One-time setup. You can ignore it afterwards. |
+          | `signing/debug.keystore.b64` | Your signing key, stored as text, so updates install over old builds. |
+
+          ## Good to know
+
+          - **Rename your app:** change `app_name` in `strings.xml`.
+          - **New package name:** change `namespace` and `applicationId` in `app/build.gradle.kts` to the same value, and move the `phoneapk` folder to match.
+          - **Adding libraries:** this template uses none, to keep the build simple. When you need one, add a `dependencies { }` block at the bottom of `app/build.gradle.kts` and put the library line inside it.
+          - **Your signing key is unique to this repo.** It was made when you ran **Set up project** and is stored in `signing/debug.keystore.b64`. Keep the repo private. If you delete that file, builds get a new random key and you must uninstall the old app before installing the new one. For Google Play you need a separate release key, which this template doesn't set up.
+          - **Free limits:** public repos build for free. Private repos use your monthly free GitHub Actions minutes, which are enough for a normal hobby project.
+          - **Only the newest build is kept.** Each build replaces the one called Latest.
+          __PHONE_APK_EOF__
+          mkdir -p 'app'
+          cat > 'app/build.gradle.kts' <<'__PHONE_APK_EOF__'
+          plugins {
+              id("com.android.application")
+              id("org.jetbrains.kotlin.android")
+          }
+
+          android {
+              // To rename your app's package, change BOTH of these to the same new value
+              // and move the folder app/src/main/java/com/example/phoneapk to match.
+              namespace = "com.example.phoneapk"
+              compileSdk = 34
+
+              defaultConfig {
+                  applicationId = "com.example.phoneapk"
+                  minSdk = 24
+                  targetSdk = 34
+                  // The build number is passed in by the workflow so every build counts up.
+                  versionCode = (project.findProperty("versionCodeOverride") as String?)?.toIntOrNull() ?: 1
+                  versionName = "1.0"
+              }
+
+              compileOptions {
+                  sourceCompatibility = JavaVersion.VERSION_17
+                  targetCompatibility = JavaVersion.VERSION_17
+              }
+
+              kotlinOptions {
+                  jvmTarget = "17"
+              }
+          }
+          __PHONE_APK_EOF__
+          mkdir -p 'app/src/main'
+          cat > 'app/src/main/AndroidManifest.xml' <<'__PHONE_APK_EOF__'
+          <?xml version="1.0" encoding="utf-8"?>
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+              <application
+                  android:allowBackup="false"
+                  android:label="@string/app_name"
+                  android:theme="@android:style/Theme.Material.Light.NoActionBar">
+
+                  <activity
+                      android:name=".MainActivity"
+                      android:exported="true">
+                      <intent-filter>
+                          <action android:name="android.intent.action.MAIN" />
+                          <category android:name="android.intent.category.LAUNCHER" />
+                      </intent-filter>
+                  </activity>
+
+              </application>
+
+          </manifest>
+          __PHONE_APK_EOF__
+          mkdir -p 'app/src/main/java/com/example/phoneapk'
+          cat > 'app/src/main/java/com/example/phoneapk/MainActivity.kt' <<'__PHONE_APK_EOF__'
+          package com.example.phoneapk
+
+          import android.app.Activity
+          import android.graphics.Color
+          import android.os.Bundle
+          import android.view.Gravity
+          import android.widget.Button
+          import android.widget.LinearLayout
+          import android.widget.TextView
+
+          // A tiny starter screen built in code (no layout files, no extra libraries),
+          // so there is as little as possible that can break the build.
+          // Replace everything in onCreate with your own app.
+          class MainActivity : Activity() {
+
+              private var taps = 0
+
+              override fun onCreate(savedInstanceState: Bundle?) {
+                  super.onCreate(savedInstanceState)
+
+                  val pad = (24 * resources.displayMetrics.density).toInt()
+
+                  val title = TextView(this).apply {
+                      text = "It works!"
+                      textSize = 30f
+                      setTextColor(Color.BLACK)
+                      gravity = Gravity.CENTER
+                  }
+
+                  val subtitle = TextView(this).apply {
+                      text = "Built on GitHub, with no computer."
+                      textSize = 16f
+                      setTextColor(Color.DKGRAY)
+                      gravity = Gravity.CENTER
+                  }
+
+                  val counter = TextView(this).apply {
+                      text = "Taps: 0"
+                      textSize = 20f
+                      setTextColor(Color.BLACK)
+                      gravity = Gravity.CENTER
+                      setPadding(0, pad, 0, pad)
+                  }
+
+                  val button = Button(this).apply {
+                      text = "Tap me"
+                      setOnClickListener {
+                          taps++
+                          counter.text = "Taps: $taps"
+                      }
+                  }
+
+                  val root = LinearLayout(this).apply {
+                      orientation = LinearLayout.VERTICAL
+                      gravity = Gravity.CENTER
+                      setBackgroundColor(Color.WHITE)
+                      setPadding(pad, pad, pad, pad)
+                      addView(title)
+                      addView(subtitle)
+                      addView(counter)
+                      addView(button)
+                  }
+
+                  setContentView(root)
+              }
+          }
+          __PHONE_APK_EOF__
+          mkdir -p 'app/src/main/res/values'
+          cat > 'app/src/main/res/values/strings.xml' <<'__PHONE_APK_EOF__'
+          <?xml version="1.0" encoding="utf-8"?>
+          <resources>
+              <string name="app_name">Phone App</string>
+          </resources>
+          __PHONE_APK_EOF__
+          cat > 'build.gradle.kts' <<'__PHONE_APK_EOF__'
+          plugins {
+              id("com.android.application") version "8.5.2" apply false
+              id("org.jetbrains.kotlin.android") version "1.9.24" apply false
+          }
+          __PHONE_APK_EOF__
+          cat > 'gradle.properties' <<'__PHONE_APK_EOF__'
+          org.gradle.jvmargs=-Xmx2g -Dfile.encoding=UTF-8
+          android.useAndroidX=false
+          android.nonTransitiveRClass=true
+          kotlin.code.style=official
+          __PHONE_APK_EOF__
+          cat > 'settings.gradle.kts' <<'__PHONE_APK_EOF__'
+          pluginManagement {
+              repositories {
+                  google()
+                  mavenCentral()
+                  gradlePluginPortal()
+              }
+          }
+
+          dependencyResolutionManagement {
+              repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+              repositories {
+                  google()
+                  mavenCentral()
+              }
+          }
+
+          rootProject.name = "PhoneApp"
+          include(":app")
+          __PHONE_APK_EOF__
+          mkdir -p signing
+          keytool -genkeypair -keystore /tmp/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname 'CN=Android Debug,O=Android,C=US'
+          base64 -w 76 /tmp/debug.keystore > signing/debug.keystore.b64
+
+      - name: Save the files to your repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Nothing to commit."
+            exit 0
+          fi
+          git commit -m "Add phone-only APK project files" -m "Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>"
+          git push

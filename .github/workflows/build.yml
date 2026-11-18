@@ -1,0 +1,77 @@
+name: Build APK
+
+on:
+  push:
+    branches: [main, master]
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      # Keeps the signing key the same on every build, so a new build
+      # installs over the old one instead of failing with "App not installed".
+      - name: Restore signing key
+        run: |
+          if [ -f signing/debug.keystore.b64 ]; then
+            mkdir -p ~/.android
+            base64 -d signing/debug.keystore.b64 > ~/.android/debug.keystore
+          fi
+
+      - name: Build the APK
+        run: |
+          set -o pipefail
+          gradle assembleDebug --stacktrace --no-daemon -PversionCodeOverride=${{ github.run_number }} 2>&1 | tee build.log
+
+      # If the build fails, put the important error lines on the run page
+      # so they can be copied straight into an AI chat.
+      - name: Error summary
+        if: failure()
+        run: |
+          {
+            echo '## Build failed. Copy everything in the box below and paste it to your AI.'
+            echo '```'
+            grep -E "^e: |error:|What went wrong|Execution failed|FAILED|Could not |Unresolved" -A3 build.log | head -80 || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # Publishes the APK as a normal download, so it can be tapped on a phone.
+      - name: Publish the APK
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cp app/build/outputs/apk/debug/app-debug.apk phone-app.apk
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest phone-app.apk \
+            --target "${{ github.sha }}" \
+            --title "Latest build (#${{ github.run_number }})" \
+            --notes "Tap phone-app.apk below to download it, then open it to install."
+
+      - name: Keep the full log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-log
+          path: build.log
+          if-no-files-found: ignore
