@@ -4,14 +4,12 @@ plugins {
 }
 
 android {
-    // To rename your app's package, change BOTH of these to the same new value
-    // and move the folder app/src/main/java/com/example/phoneapk to match.
-    namespace = "com.example.phoneapk"
+    namespace = "com.focuslock.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.phoneapk"
-        minSdk = 24
+        applicationId = "com.focuslock.app"
+        minSdk = 28
         targetSdk = 34
         // The build number is passed in by the workflow so every build counts up.
         versionCode = (project.findProperty("versionCodeOverride") as String?)?.toIntOrNull() ?: 1
