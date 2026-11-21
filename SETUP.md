@@ -1,28 +1,23 @@
-# Focus Lock - first test build
+# Focus Lock build 2 (accessibility version)
 
-## Before the command
-- Accounts: already removed.
-- Settings > Users: no guest or extra users. Tecno phones: also remove XSpace / Second Space / Dual Apps if you have them (they count as another user and block the command).
-- Settings > Developer options > turn on Wireless debugging. It needs Wi-Fi to be connected (a hotspot from another phone works).
+No adb, no computer, no system-setting changes. Nothing here can break your phone: if the app or service stops, the lock simply stops.
 
-## Run the command from Termux on the same phone
-    pkg install android-tools
-Open Wireless debugging > "Pair device with pairing code". Keep that popup visible (use split screen or a floating window, it closes if you leave).
+## Install and enable
+1. Install the APK from Releases (Latest build).
+2. Open Focus Lock. Tap **Open accessibility settings**, find **Focus Lock** (under Downloaded apps / Installed services), and switch it on.
+3. If the switch is greyed out: Settings > Apps > Focus Lock > three dots (top right) > **Allow restricted settings**, then try again.
+4. Back in the app you should see the minutes box and **Start lock**.
 
-    adb pair localhost:PAIRING_PORT
-Enter the 6-digit code. Then use the IP and port shown on the main Wireless debugging screen (a different port):
+## Test (leave the minutes at 2)
+- Tap Start lock. Try Phone, Messages, Calendar, Clock: they should open.
+- Press Home, or open any other app (even Settings): you should get thrown back to Focus Lock.
+- Restart the phone mid-lock: the lock should still be running afterwards.
+- Emergency exit: tap it, wait 60 seconds, and the lock ends.
 
-    adb connect localhost:MAIN_PORT
-    adb shell dpm set-device-owner com.focuslock.app/.AdminReceiver
+## Safety
+- Hard cap of 240 minutes per session. Keep tests at 2 minutes until you trust it.
+- Settings and the app installer are blocked during a lock, so you can't switch the service off mid-session. That is the point; use the emergency exit if you truly must.
+- To remove the app: when no lock is running, switch the service off in accessibility settings, then uninstall normally.
 
-You want: `Success: Device owner set to package ...`
-
-## Test
-Open the app. Leave it at 2 minutes and tap Start lock. Try Phone, Messages, Calendar, Clock. Try Home and Recents. Restart the phone mid-lock: it should return locked, with the timer still counting.
-
-## If something goes wrong
-- Emergency exit on the lock screen ends it after a 60 second wait.
-- Test sessions are short on purpose. Don't raise the minutes until the escape works.
-
-## Later (not in this build)
-Block uninstall, safe mode, factory reset and USB debugging during locks. Study content, quiz and penalty. The uninstall key.
+## Not in this build
+Study topic picker, quiz and penalty. A slower, harder-to-abuse emergency exit. A delayed uninstall key.
