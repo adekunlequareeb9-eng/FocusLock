@@ -21,10 +21,12 @@ class MainActivity : Activity() {
 
     private val h = Handler(Looper.getMainLooper())
     private lateinit var root: LinearLayout
-    private var mode = -1            // 0 = service off, 1 = idle, 2 = locked
+    private var mode = -1            // 0 = setup needed, 1 = idle, 2 = locked
+    private var sig = ""
     private var exitAt = 0L
     private var minutesBox: EditText? = null
     private var timerView: TextView? = null
+    private var diagView: TextView? = null
     private var exitBtn: Button? = null
 
     private val tick = object : Runnable {
@@ -71,14 +73,25 @@ class MainActivity : Activity() {
         return enabled.split(':').any { it.equals(long, true) || it.equals(short, true) }
     }
 
+    private fun overlayOk(): Boolean = Settings.canDrawOverlays(this)
+
     private fun render() {
         val active = Session.isActive(this)
-        val newMode = if (active) 2 else if (serviceEnabled()) 1 else 0
-        if (newMode != mode) {
+        val svc = serviceEnabled()
+        val ovl = overlayOk()
+        val newMode = if (active) 2 else if (svc && ovl) 1 else 0
+        val newSig = "$newMode-$svc-$ovl"
+        if (newSig != sig) {
+            sig = newSig
             mode = newMode
-            build()
+            build(svc, ovl)
         }
         if (mode == 2) updateLocked()
+    }
+
+    private fun rebuild() {
+        sig = ""
+        render()
     }
 
     private fun tv(s: String, size: Float = 18f) = TextView(this).apply {
@@ -97,23 +110,36 @@ class MainActivity : Activity() {
         try {
             startActivity(i)
         } catch (e: Exception) {
-            Toast.makeText(this, "Can't open that app", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Can't open that", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun build() {
+    private fun build(svc: Boolean, ovl: Boolean) {
         root.removeAllViews()
-        minutesBox = null; timerView = null; exitBtn = null
+        minutesBox = null; timerView = null; diagView = null; exitBtn = null
         root.addView(tv("Focus Lock", 28f))
         when (mode) {
             0 -> {
-                root.addView(tv("One-time setup: turn on the Focus Lock accessibility service. It only checks which app is on screen."))
-                root.addView(btn("1. Open accessibility settings") {
-                    open(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
-                })
-                root.addView(tv("If the switch is greyed out, Android is blocking sideloaded apps. Open App info, tap the three dots at the top right, and choose Allow restricted settings. Then try again."))
-                root.addView(btn("Open App info") {
-                    open(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName")))
+                root.addView(tv("One-time setup"))
+                root.addView(tv((if (svc) "✔ " else "✘ ") + "Accessibility service"))
+                root.addView(tv((if (ovl) "✔ " else "✘ ") + "Display over other apps"))
+                if (!svc) {
+                    root.addView(btn("Turn on accessibility service") {
+                        open(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+                    })
+                    root.addView(tv("If the switch is greyed out: App info, three dots at the top right, Allow restricted settings.", 14f))
+                    root.addView(btn("Open App info") {
+                        open(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName")))
+                    })
+                }
+                if (!ovl) {
+                    root.addView(btn("Allow display over other apps") {
+                        open(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")))
+                    })
+                }
+                root.addView(tv("Also recommended so the phone never closes Focus Lock: App info > Battery > Unrestricted, allow Autostart, and lock the app in the Recents screen.", 14f))
+                root.addView(btn("Open battery settings") {
+                    open(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
                 })
             }
             1 -> {
@@ -128,8 +154,11 @@ class MainActivity : Activity() {
                     val m = minutesBox?.text?.toString()?.toIntOrNull() ?: 2
                     exitAt = 0L
                     Session.start(this, m)
-                    mode = -1
-                    render()
+                    rebuild()
+                })
+                root.addView(tv(" "))
+                root.addView(btn("Open battery settings") {
+                    open(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
                 })
             }
             2 -> {
@@ -144,6 +173,9 @@ class MainActivity : Activity() {
                     exitAt = if (exitAt == 0L) System.currentTimeMillis() + Session.EXIT_DELAY_SEC * 1000L else 0L
                 }
                 root.addView(exitBtn)
+                diagView = tv("", 12f)
+                diagView?.setTextColor(Color.GRAY)
+                root.addView(diagView)
             }
         }
     }
@@ -152,13 +184,17 @@ class MainActivity : Activity() {
         val s = Session.remainingMs(this) / 1000
         timerView?.text = String.format("%02d:%02d:%02d", s / 3600, (s % 3600) / 60, s % 60)
 
+        val age = Session.lastAgeSec(this)
+        val ageText = if (age < 0) "never" else "${age}s ago"
+        diagView?.text = "Service last saw: ${Session.lastPkg(this)} ($ageText)\n" +
+            "Blocks so far: ${Session.bounces(this)}   Overlay permission: ${if (overlayOk()) "yes" else "no"}"
+
         if (exitAt > 0L) {
             val left = (exitAt - System.currentTimeMillis()) / 1000
             if (left <= 0L) {
                 exitAt = 0L
                 Session.stop(this)
-                mode = -1
-                render()
+                rebuild()
                 return
             }
             exitBtn?.text = "Exiting in ${left}s - tap to cancel"

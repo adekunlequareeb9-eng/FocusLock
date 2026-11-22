@@ -26,11 +26,13 @@ class FocusService : AccessibilityService() {
         try {
             if (!Session.isActive(this)) return
             val pkg = event.packageName?.toString() ?: return
+            Session.noteEvent(this, pkg)
             val now = SystemClock.elapsedRealtime()
             if (now - allowedAt > 60_000L) refreshAllowed()
             if (Session.isAllowed(pkg, allowed)) return
             if (now - lastBounce < 600L) return
             lastBounce = now
+            Session.noteBounce(this)
             bounce()
         } catch (_: Exception) {
             // Fail open: if anything goes wrong, never trap the phone.

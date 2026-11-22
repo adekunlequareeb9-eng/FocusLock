@@ -1,23 +1,26 @@
-# Focus Lock build 2 (accessibility version)
+# Focus Lock build 3
 
-No adb, no computer, no system-setting changes. Nothing here can break your phone: if the app or service stops, the lock simply stops.
+No adb, no computer, no system-setting changes. If the app or service stops, the lock simply stops.
 
-## Install and enable
-1. Install the APK from Releases (Latest build).
-2. Open Focus Lock. Tap **Open accessibility settings**, find **Focus Lock** (under Downloaded apps / Installed services), and switch it on.
-3. If the switch is greyed out: Settings > Apps > Focus Lock > three dots (top right) > **Allow restricted settings**, then try again.
-4. Back in the app you should see the minutes box and **Start lock**.
+## What changed in build 3
+- New one-time permission: **Display over other apps**. It lets Focus Lock pull itself back to the front even after the phone has had it in the background for a while.
+- Setup screen with ticks for both permissions, plus a battery shortcut.
+- A small grey status line on the locked screen: which app the service last saw, how long ago, how many blocks, and whether the overlay permission is on.
 
-## Test (leave the minutes at 2)
-- Tap Start lock. Try Phone, Messages, Calendar, Clock: they should open.
-- Press Home, or open any other app (even Settings): you should get thrown back to Focus Lock.
-- Restart the phone mid-lock: the lock should still be running afterwards.
-- Emergency exit: tap it, wait 60 seconds, and the lock ends.
+## Install and set up
+1. Install over the old build (same signing key keeps your settings).
+2. Open Focus Lock. Tick both items on the setup screen:
+   - Accessibility service on (if greyed out: App info > three dots > Allow restricted settings).
+   - Allow display over other apps.
+3. Keep Focus Lock alive: App info > Battery > **Unrestricted**; allow **Autostart** if your phone has it; open Recents and **lock** the Focus Lock card (long-press or the lock icon on the card).
+
+## Test (5 minutes)
+- Start a lock. Try Phone, Messages, Calendar, Clock.
+- Press Home, open another app, wait 30 seconds, press Home again, open something else. It should always come back.
+- If it ever lets you out, open Focus Lock and read the grey status line, or send me a photo of it.
+  - "Service last saw" stuck on an old time = the phone killed the service.
+  - Blocks goes up but the app doesn't come back = Android refused the pull-back.
 
 ## Safety
-- Hard cap of 240 minutes per session. Keep tests at 2 minutes until you trust it.
-- Settings and the app installer are blocked during a lock, so you can't switch the service off mid-session. That is the point; use the emergency exit if you truly must.
-- To remove the app: when no lock is running, switch the service off in accessibility settings, then uninstall normally.
-
-## Not in this build
-Study topic picker, quiz and penalty. A slower, harder-to-abuse emergency exit. A delayed uninstall key.
+- Hard cap 240 minutes. Emergency exit ends a lock after a 60-second wait.
+- To remove the app: with no lock running, switch the service off in accessibility settings, then uninstall.
