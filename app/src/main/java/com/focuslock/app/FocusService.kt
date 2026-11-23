@@ -24,7 +24,8 @@ class FocusService : AccessibilityService() {
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
         if (event == null || event.eventType != AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) return
         try {
-            if (!Session.isActive(this)) return
+            // Locked from Start until the quiz is passed.
+            if (!Session.isLocked(this)) return
             val pkg = event.packageName?.toString() ?: return
             Session.noteEvent(this, pkg)
             val now = SystemClock.elapsedRealtime()

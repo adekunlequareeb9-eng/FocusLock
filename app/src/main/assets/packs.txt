@@ -1,0 +1,55 @@
+# Focus Lock study packs. Edit this file on GitHub to add your own.
+# Format: "## Pack name", then pairs of "Q:" and "A:" lines (one line each).
+# Keep answers short, and give each pack at least 4 cards with different answers.
+
+## Arabic grammar basics
+Q: What are the three kinds of words (الكلمة)?
+A: اسم، فعل، حرف
+Q: What are the three cases (الإعراب) of a noun?
+A: رفع، نصب، جر
+Q: What is the sign of الرفع on a regular singular noun?
+A: الضمة
+Q: What is the sign of النصب on a regular singular noun?
+A: الفتحة
+Q: What is the sign of الجر on a regular singular noun?
+A: الكسرة
+Q: What case is the مبتدأ (subject of a nominal sentence) in?
+A: مرفوع
+Q: What case is the خبر (predicate) of a simple nominal sentence in?
+A: مرفوع
+Q: What case is the فاعل (doer of the verb) in?
+A: مرفوع
+Q: What case is the مفعول به (direct object) in?
+A: منصوب
+Q: What case is a noun right after a preposition (حرف جر) in?
+A: مجرور
+Q: What does a nominal sentence (الجملة الاسمية) begin with?
+A: اسم
+Q: What does a verbal sentence (الجملة الفعلية) begin with?
+A: فعل
+Q: What is the effect of إنّ on the sentence?
+A: تنصب الاسم وترفع الخبر
+Q: What is the effect of كان on the sentence?
+A: ترفع الاسم وتنصب الخبر
+
+## Coding basics
+Q: In Python, which keyword defines a function?
+A: def
+Q: What does len([1, 2, 3]) return in Python?
+A: 3
+Q: In Kotlin, which keyword declares a read-only variable?
+A: val
+Q: In Kotlin, which keyword declares a variable that can change?
+A: var
+Q: What does HTML stand for?
+A: HyperText Markup Language
+Q: What does CSS stand for?
+A: Cascading Style Sheets
+Q: What does API stand for?
+A: Application Programming Interface
+Q: What does git commit do?
+A: Saves your staged changes as a snapshot in history
+Q: What does === check in JavaScript?
+A: Same value and same type
+Q: What is the index of the first item in a Python list?
+A: 0

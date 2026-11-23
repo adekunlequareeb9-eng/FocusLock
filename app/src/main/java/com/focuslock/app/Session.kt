@@ -10,32 +10,81 @@ import android.view.inputmethod.InputMethodManager
 object Session {
     private const val PREFS = "focuslock"
     private const val KEY_END = "end_at"
+    private const val KEY_TOPIC = "topic"
+    private const val KEY_DEADLINE = "commit_deadline"
     private const val KEY_LAST_PKG = "last_pkg"
     private const val KEY_LAST_AT = "last_at"
     private const val KEY_BOUNCES = "bounces"
 
-    const val MAX_MINUTES = 240      // hard cap on any session
-    const val EXIT_DELAY_SEC = 60    // emergency exit wait (test build; raise later)
+    // ---- Tune these ----
+    const val MAX_MINUTES = 240            // hard cap on the starting duration
+    const val EXIT_DELAY_SEC = 300         // emergency exit wait (5 min)
+    const val COMMIT_WINDOW_SEC = 120      // time allowed to pick a study topic
+    const val NO_TOPIC_PENALTY_MIN = 10    // added if no topic is picked in time
+    const val QUIZ_FAIL_PENALTY_MIN = 10   // added if the quiz is failed
+    const val QUIZ_QUESTIONS = 5           // questions per quiz (needs 80% to pass)
 
     private fun prefs(c: Context) = c.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
 
     fun endAt(c: Context): Long = prefs(c).getLong(KEY_END, 0L)
-    fun isActive(c: Context): Boolean = endAt(c) > System.currentTimeMillis()
+
+    // A session exists from Start until the quiz is passed (or the emergency exit finishes).
+    fun isLocked(c: Context): Boolean = endAt(c) != 0L
+    fun inTimePhase(c: Context): Boolean = endAt(c) > System.currentTimeMillis()
     fun remainingMs(c: Context): Long = (endAt(c) - System.currentTimeMillis()).coerceAtLeast(0L)
 
     // The end time is an absolute timestamp, so a restart cannot reset it.
     fun start(c: Context, minutes: Int) {
         val m = minutes.coerceIn(1, MAX_MINUTES)
+        val windowSec = minOf(COMMIT_WINDOW_SEC, m * 30)
+        val now = System.currentTimeMillis()
         prefs(c).edit()
-            .putLong(KEY_END, System.currentTimeMillis() + m * 60_000L)
+            .putLong(KEY_END, now + m * 60_000L)
+            .putString(KEY_TOPIC, "")
+            .putLong(KEY_DEADLINE, now + windowSec * 1000L)
             .putInt(KEY_BOUNCES, 0)
             .remove(KEY_LAST_PKG)
             .remove(KEY_LAST_AT)
             .commit()
     }
 
-    fun stop(c: Context) {
-        prefs(c).edit().remove(KEY_END).commit()
+    fun finish(c: Context) {
+        prefs(c).edit().remove(KEY_END).remove(KEY_TOPIC).remove(KEY_DEADLINE).commit()
+    }
+
+    fun failQuiz(c: Context) {
+        prefs(c).edit()
+            .putLong(KEY_END, System.currentTimeMillis() + QUIZ_FAIL_PENALTY_MIN * 60_000L)
+            .commit()
+    }
+
+    fun topic(c: Context): String = prefs(c).getString(KEY_TOPIC, "") ?: ""
+
+    fun setTopic(c: Context, t: String) {
+        prefs(c).edit().putString(KEY_TOPIC, t).putLong(KEY_DEADLINE, 0L).commit()
+    }
+
+    // Seconds left to pick a topic, or -1 if no choice is pending.
+    fun commitLeftSec(c: Context): Long {
+        val p = prefs(c)
+        val deadline = p.getLong(KEY_DEADLINE, 0L)
+        val t = p.getString(KEY_TOPIC, "") ?: ""
+        if (t.isNotBlank() || deadline == 0L) return -1L
+        return ((deadline - System.currentTimeMillis()) / 1000L).coerceAtLeast(0L)
+    }
+
+    // If the topic window ran out with no topic, add the penalty once. Returns true when applied.
+    fun checkCommitPenalty(c: Context): Boolean {
+        val p = prefs(c)
+        val deadline = p.getLong(KEY_DEADLINE, 0L)
+        val t = p.getString(KEY_TOPIC, "") ?: ""
+        if (t.isNotBlank() || deadline == 0L || System.currentTimeMillis() <= deadline) return false
+        val end = p.getLong(KEY_END, 0L)
+        p.edit()
+            .putLong(KEY_END, end + NO_TOPIC_PENALTY_MIN * 60_000L)
+            .putLong(KEY_DEADLINE, 0L)
+            .commit()
+        return true
     }
 
     // Live diagnostics, shown on the locked screen.

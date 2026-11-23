@@ -21,11 +21,25 @@ class MainActivity : Activity() {
 
     private val h = Handler(Looper.getMainLooper())
     private lateinit var root: LinearLayout
-    private var mode = -1            // 0 = setup needed, 1 = idle, 2 = locked
+
+    private var phase = -1            // 0 setup, 1 idle, 2 locked (timer), 3 quiz
     private var sig = ""
     private var exitAt = 0L
+    private var notice: String? = null
+
+    private var studyIdx = -1
+    private var studyShowAnswer = false
+
+    private var quiz: List<Packs.Question> = emptyList()
+    private var quizTopic = ""
+    private var quizIdx = 0
+    private var quizScore = 0
+    private var quizAnswered = false
+    private var lastChoice = -1
+
     private var minutesBox: EditText? = null
     private var timerView: TextView? = null
+    private var commitView: TextView? = null
     private var diagView: TextView? = null
     private var exitBtn: Button? = null
 
@@ -60,7 +74,7 @@ class MainActivity : Activity() {
 
     @Deprecated("Back is ignored while locked")
     override fun onBackPressed() {
-        if (mode != 2) super.onBackPressed()
+        if (phase < 2) super.onBackPressed()
     }
 
     private fun serviceEnabled(): Boolean {
@@ -75,24 +89,155 @@ class MainActivity : Activity() {
 
     private fun overlayOk(): Boolean = Settings.canDrawOverlays(this)
 
+    // ---------------------------------------------------------------- state
+
     private fun render() {
-        val active = Session.isActive(this)
         val svc = serviceEnabled()
         val ovl = overlayOk()
-        val newMode = if (active) 2 else if (svc && ovl) 1 else 0
-        val newSig = "$newMode-$svc-$ovl"
+        val newPhase = when {
+            Session.isLocked(this) -> if (Session.inTimePhase(this)) 2 else 3
+            svc && ovl -> 1
+            else -> 0
+        }
+
+        if (newPhase == 2 && Session.checkCommitPenalty(this)) {
+            notice = "No topic chosen in time: +${Session.NO_TOPIC_PENALTY_MIN} minutes added."
+        }
+        if (newPhase != 2) {
+            studyIdx = -1
+            studyShowAnswer = false
+        }
+        if (newPhase == 3 && quiz.isEmpty()) {
+            prepareQuiz()
+            if (!Session.isLocked(this)) {
+                sig = ""
+                render()
+                return
+            }
+        }
+        if (newPhase != 3 && quiz.isNotEmpty()) resetQuiz()
+
+        val newSig = "$newPhase|$svc|$ovl|${Session.topic(this).isBlank()}|$studyIdx|" +
+            "$studyShowAnswer|$quizIdx|$quizAnswered|${notice ?: ""}"
         if (newSig != sig) {
             sig = newSig
-            mode = newMode
+            phase = newPhase
             build(svc, ovl)
         }
-        if (mode == 2) updateLocked()
+        tickViews()
     }
 
     private fun rebuild() {
         sig = ""
         render()
     }
+
+    private fun tickViews() {
+        if (phase == 2) {
+            val s = Session.remainingMs(this) / 1000
+            timerView?.text = String.format("%02d:%02d:%02d", s / 3600, (s % 3600) / 60, s % 60)
+            val left = Session.commitLeftSec(this)
+            commitView?.text = if (left >= 0) {
+                "Pick what you'll study. ${left}s left, or +${Session.NO_TOPIC_PENALTY_MIN} min is added."
+            } else {
+                "No topic chosen: a random topic will be used for the quiz."
+            }
+        }
+        if (phase == 2 || phase == 3) {
+            val age = Session.lastAgeSec(this)
+            val ageText = if (age < 0) "never" else "${age}s ago"
+            diagView?.text = "Service last saw: ${Session.lastPkg(this)} ($ageText)\n" +
+                "Blocks so far: ${Session.bounces(this)}   Overlay permission: ${if (overlayOk()) "yes" else "no"}"
+            updateExit()
+        }
+    }
+
+    private fun updateExit() {
+        if (exitAt > 0L) {
+            val left = (exitAt - System.currentTimeMillis()) / 1000
+            if (left <= 0L) {
+                exitAt = 0L
+                Session.finish(this)
+                resetQuiz()
+                studyIdx = -1
+                notice = "Emergency exit used."
+                rebuild()
+                return
+            }
+            exitBtn?.text = "Exiting in ${left}s - tap to cancel"
+        } else {
+            exitBtn?.text = "Emergency exit (${Session.EXIT_DELAY_SEC / 60} min wait)"
+        }
+    }
+
+    // ---------------------------------------------------------------- quiz
+
+    private fun resetQuiz() {
+        quiz = emptyList()
+        quizTopic = ""
+        quizIdx = 0
+        quizScore = 0
+        quizAnswered = false
+        lastChoice = -1
+    }
+
+    private fun prepareQuiz() {
+        val packs = Packs.load(this)
+        val wanted = Session.topic(this)
+        var pack = packs.firstOrNull { it.name == wanted }
+        if (pack == null && packs.isNotEmpty()) {
+            pack = packs.random()
+            Session.setTopic(this, pack.name)
+        }
+        if (pack == null || pack.cards.isEmpty()) {
+            Session.finish(this)
+            notice = "No study cards found, so there is nothing to ask. Lock released."
+            return
+        }
+        quizTopic = pack.name
+        quiz = Packs.makeQuiz(pack, Session.QUIZ_QUESTIONS)
+        quizIdx = 0
+        quizScore = 0
+        quizAnswered = false
+        lastChoice = -1
+    }
+
+    private fun onAnswer(i: Int) {
+        if (quizAnswered || quizIdx >= quiz.size) return
+        lastChoice = i
+        quizAnswered = true
+        if (i == quiz[quizIdx].correct) quizScore++
+        rebuild()
+    }
+
+    private fun nextQuestion() {
+        if (quizIdx + 1 < quiz.size) {
+            quizIdx++
+            quizAnswered = false
+            lastChoice = -1
+            rebuild()
+        } else {
+            finishQuiz()
+        }
+    }
+
+    private fun finishQuiz() {
+        val total = quiz.size
+        val need = (total * 4 + 4) / 5      // 80%, rounded up
+        val score = quizScore
+        resetQuiz()
+        if (score >= need) {
+            Session.finish(this)
+            notice = "Quiz passed ($score/$total). You're free."
+        } else {
+            Session.failQuiz(this)
+            notice = "Quiz failed ($score/$total, needed $need). +${Session.QUIZ_FAIL_PENALTY_MIN} minutes. Study the cards and try again."
+        }
+        studyIdx = -1
+        rebuild()
+    }
+
+    // ---------------------------------------------------------------- views
 
     private fun tv(s: String, size: Float = 18f) = TextView(this).apply {
         text = s
@@ -114,92 +259,165 @@ class MainActivity : Activity() {
         }
     }
 
+    private fun addExit() {
+        root.addView(tv(" ", 8f))
+        exitBtn = btn("Emergency exit") {
+            exitAt = if (exitAt == 0L) System.currentTimeMillis() + Session.EXIT_DELAY_SEC * 1000L else 0L
+        }
+        root.addView(exitBtn)
+    }
+
+    private fun addDiag() {
+        diagView = tv("", 12f)
+        diagView?.setTextColor(Color.GRAY)
+        root.addView(diagView)
+    }
+
     private fun build(svc: Boolean, ovl: Boolean) {
         root.removeAllViews()
-        minutesBox = null; timerView = null; diagView = null; exitBtn = null
+        minutesBox = null; timerView = null; commitView = null; diagView = null; exitBtn = null
         root.addView(tv("Focus Lock", 28f))
-        when (mode) {
-            0 -> {
-                root.addView(tv("One-time setup"))
-                root.addView(tv((if (svc) "✔ " else "✘ ") + "Accessibility service"))
-                root.addView(tv((if (ovl) "✔ " else "✘ ") + "Display over other apps"))
-                if (!svc) {
-                    root.addView(btn("Turn on accessibility service") {
-                        open(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
-                    })
-                    root.addView(tv("If the switch is greyed out: App info, three dots at the top right, Allow restricted settings.", 14f))
-                    root.addView(btn("Open App info") {
-                        open(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName")))
-                    })
-                }
-                if (!ovl) {
-                    root.addView(btn("Allow display over other apps") {
-                        open(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")))
-                    })
-                }
-                root.addView(tv("Also recommended so the phone never closes Focus Lock: App info > Battery > Unrestricted, allow Autostart, and lock the app in the Recents screen.", 14f))
-                root.addView(btn("Open battery settings") {
-                    open(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
-                })
-            }
-            1 -> {
-                root.addView(tv("Minutes to lock (max ${Session.MAX_MINUTES}):"))
-                minutesBox = EditText(this).apply {
-                    inputType = InputType.TYPE_CLASS_NUMBER
-                    setText("2")
-                    setTextColor(Color.WHITE)
-                }
-                root.addView(minutesBox)
-                root.addView(btn("Start lock") {
-                    val m = minutesBox?.text?.toString()?.toIntOrNull() ?: 2
-                    exitAt = 0L
-                    Session.start(this, m)
-                    rebuild()
-                })
-                root.addView(tv(" "))
-                root.addView(btn("Open battery settings") {
-                    open(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
-                })
-            }
-            2 -> {
-                timerView = tv("", 48f)
-                root.addView(timerView)
-                root.addView(btn("Phone") { open(Session.dialIntent()) })
-                root.addView(btn("Messages") { open(Session.smsIntent()) })
-                root.addView(btn("Calendar") { open(Session.calendarIntent()) })
-                root.addView(btn("Clock") { open(Session.clockIntent()) })
-                root.addView(tv(" "))
-                exitBtn = btn("Emergency exit (${Session.EXIT_DELAY_SEC}s wait)") {
-                    exitAt = if (exitAt == 0L) System.currentTimeMillis() + Session.EXIT_DELAY_SEC * 1000L else 0L
-                }
-                root.addView(exitBtn)
-                diagView = tv("", 12f)
-                diagView?.setTextColor(Color.GRAY)
-                root.addView(diagView)
-            }
+        when (phase) {
+            0 -> buildSetup(svc, ovl)
+            1 -> buildIdle()
+            2 -> buildLocked()
+            3 -> buildQuiz()
         }
     }
 
-    private fun updateLocked() {
-        val s = Session.remainingMs(this) / 1000
-        timerView?.text = String.format("%02d:%02d:%02d", s / 3600, (s % 3600) / 60, s % 60)
-
-        val age = Session.lastAgeSec(this)
-        val ageText = if (age < 0) "never" else "${age}s ago"
-        diagView?.text = "Service last saw: ${Session.lastPkg(this)} ($ageText)\n" +
-            "Blocks so far: ${Session.bounces(this)}   Overlay permission: ${if (overlayOk()) "yes" else "no"}"
-
-        if (exitAt > 0L) {
-            val left = (exitAt - System.currentTimeMillis()) / 1000
-            if (left <= 0L) {
-                exitAt = 0L
-                Session.stop(this)
-                rebuild()
-                return
-            }
-            exitBtn?.text = "Exiting in ${left}s - tap to cancel"
-        } else {
-            exitBtn?.text = "Emergency exit (${Session.EXIT_DELAY_SEC}s wait)"
+    private fun buildSetup(svc: Boolean, ovl: Boolean) {
+        root.addView(tv("One-time setup"))
+        root.addView(tv((if (svc) "✔ " else "✘ ") + "Accessibility service"))
+        root.addView(tv((if (ovl) "✔ " else "✘ ") + "Display over other apps"))
+        if (!svc) {
+            root.addView(btn("Turn on accessibility service") {
+                open(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+            })
+            root.addView(tv("If the switch is greyed out: App info, three dots at the top right, Allow restricted settings.", 14f))
+            root.addView(btn("Open App info") {
+                open(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:$packageName")))
+            })
         }
+        if (!ovl) {
+            root.addView(btn("Allow display over other apps") {
+                open(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")))
+            })
+        }
+        root.addView(tv("Also recommended so the phone never closes Focus Lock: App info > Battery > Unrestricted, allow Autostart, and lock the app in the Recents screen.", 14f))
+        root.addView(btn("Open battery settings") {
+            open(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
+        })
+    }
+
+    private fun buildIdle() {
+        notice?.let { root.addView(tv(it, 16f)) }
+        root.addView(tv("Minutes to lock (max ${Session.MAX_MINUTES}):"))
+        minutesBox = EditText(this).apply {
+            inputType = InputType.TYPE_CLASS_NUMBER
+            setText("5")
+            setTextColor(Color.WHITE)
+        }
+        root.addView(minutesBox)
+        root.addView(tv(
+            "After you start, pick a study topic within ${Session.COMMIT_WINDOW_SEC / 60} minutes or " +
+                "+${Session.NO_TOPIC_PENALTY_MIN} minutes is added. When the timer ends, you must pass a quiz to unlock. " +
+                "Fail it and +${Session.QUIZ_FAIL_PENALTY_MIN} minutes is added.", 14f
+        ))
+        root.addView(btn("Start lock") {
+            val m = minutesBox?.text?.toString()?.toIntOrNull() ?: 5
+            exitAt = 0L
+            notice = null
+            studyIdx = -1
+            resetQuiz()
+            Session.start(this, m)
+            rebuild()
+        })
+        root.addView(tv(" "))
+        root.addView(btn("Open battery settings") {
+            open(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
+        })
+    }
+
+    private fun buildLocked() {
+        timerView = tv("", 40f)
+        root.addView(timerView)
+        notice?.let { root.addView(tv(it, 15f)) }
+
+        val topic = Session.topic(this)
+        val packs = Packs.load(this)
+        val pack = packs.firstOrNull { it.name == topic }
+
+        if (studyIdx >= 0 && pack != null && pack.cards.isNotEmpty()) {
+            val i = studyIdx % pack.cards.size
+            val card = pack.cards[i]
+            root.addView(tv("${pack.name}   ${i + 1}/${pack.cards.size}", 14f))
+            root.addView(tv(card.q, 22f))
+            if (studyShowAnswer) {
+                root.addView(tv(card.a, 22f))
+            } else {
+                root.addView(btn("Show answer") {
+                    studyShowAnswer = true
+                    rebuild()
+                })
+            }
+            root.addView(btn("Next card") {
+                studyIdx = (i + 1) % pack.cards.size
+                studyShowAnswer = false
+                rebuild()
+            })
+            root.addView(btn("Back") {
+                studyIdx = -1
+                studyShowAnswer = false
+                rebuild()
+            })
+        } else {
+            studyIdx = -1
+            if (topic.isBlank()) {
+                commitView = tv("", 16f)
+                root.addView(commitView)
+                for (p in packs) {
+                    root.addView(btn("Study: ${p.name}") {
+                        Session.setTopic(this, p.name)
+                        rebuild()
+                    })
+                }
+            } else {
+                root.addView(tv("Studying: $topic. A quiz unlocks the phone when the timer ends.", 16f))
+                root.addView(btn("Open study cards") {
+                    studyIdx = 0
+                    studyShowAnswer = false
+                    rebuild()
+                })
+            }
+            root.addView(tv(" ", 8f))
+            root.addView(btn("Phone") { open(Session.dialIntent()) })
+            root.addView(btn("Messages") { open(Session.smsIntent()) })
+            root.addView(btn("Calendar") { open(Session.calendarIntent()) })
+            root.addView(btn("Clock") { open(Session.clockIntent()) })
+        }
+        addExit()
+        addDiag()
+    }
+
+    private fun buildQuiz() {
+        root.addView(tv("Time's up. Pass the quiz to unlock your phone.", 16f))
+        notice?.let { root.addView(tv(it, 15f)) }
+        if (quiz.isNotEmpty() && quizIdx < quiz.size) {
+            val qn = quiz[quizIdx]
+            root.addView(tv("$quizTopic   ${quizIdx + 1}/${quiz.size}", 14f))
+            root.addView(tv(qn.q, 22f))
+            for (i in qn.options.indices) {
+                val b = btn(qn.options[i]) { onAnswer(i) }
+                b.isEnabled = !quizAnswered
+                root.addView(b)
+            }
+            if (quizAnswered) {
+                val ok = lastChoice == qn.correct
+                root.addView(tv(if (ok) "Correct" else "Wrong. Answer: ${qn.options[qn.correct]}", 18f))
+                root.addView(btn(if (quizIdx + 1 < quiz.size) "Next" else "See result") { nextQuestion() })
+            }
+        }
+        addExit()
+        addDiag()
     }
 }
