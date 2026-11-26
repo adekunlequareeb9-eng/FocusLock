@@ -40,6 +40,9 @@ class MainActivity : Activity() {
     private var quizAnswered = false
     private var lastChoice = -1
 
+    private var studyMode = false
+    private var studyIndex = 0
+
     private var minutesBox: EditText? = null
     private var delayBox: EditText? = null
     private var lenBox: EditText? = null
@@ -131,7 +134,7 @@ class MainActivity : Activity() {
         if (newPhase != 3 && quiz.isNotEmpty()) resetQuiz()
 
         val newSig = "$newPhase|$svc|$ovl|${Session.topic(this).isBlank()}|$tbPage|" +
-            "$quizIdx|$quizAnswered|${notice ?: ""}"
+            "$quizIdx|$quizAnswered|$studyMode|$studyIndex|${notice ?: ""}"
         if (newSig != sig) {
             sig = newSig
             phase = newPhase
@@ -451,6 +454,8 @@ class MainActivity : Activity() {
                     for (p in packs) {
                         root.addView(btn("Study pack: ${p.name}") {
                             Session.setTopic(this, p.name)
+                            studyMode = true
+                            studyIndex = 0
                             rebuild()
                         })
                     }
@@ -462,7 +467,20 @@ class MainActivity : Activity() {
                     rebuild()
                 })
             } else {
-                root.addView(tv("Quiz topic: $topic. A quiz unlocks the phone when the timer ends.", 16f))
+                val pack = packs.firstOrNull { it.name == topic }
+                if (pack != null && studyMode) {
+                    buildPackLesson(pack)
+                } else {
+                    root.addView(tv("Study topic: $topic", 18f))
+                    root.addView(tv("A quiz unlocks the phone when the timer ends.", 14f))
+                    if (pack != null) {
+                        root.addView(btn("Open explanations and examples") {
+                            studyMode = true
+                            studyIndex = 0
+                            rebuild()
+                        })
+                    }
+                }
             }
             root.addView(tv(" ", 8f))
             root.addView(btn("Phone") { open(Session.dialIntent()) })
@@ -472,6 +490,38 @@ class MainActivity : Activity() {
         }
         addExit()
         addDiag()
+    }
+
+    private fun buildPackLesson(pack: Packs.Pack) {
+        if (pack.cards.isEmpty()) return
+        studyIndex = studyIndex.coerceIn(0, pack.cards.lastIndex)
+        val card = pack.cards[studyIndex]
+        root.addView(tv("LEARN  •  ${pack.name}", 14f))
+        root.addView(tv("Concept ${studyIndex + 1} of ${pack.cards.size}", 13f))
+        root.addView(tv(card.q, 23f))
+        root.addView(tv("Short answer", 14f))
+        root.addView(tv(card.a, 19f))
+        root.addView(tv("Understand it", 18f))
+        root.addView(tv(card.explanation, 16f))
+        root.addView(tv("Try explaining this idea without looking at the answer. Think of a small example of your own.", 14f))
+        if (studyIndex > 0) {
+            root.addView(btn("Previous concept") {
+                studyIndex--
+                rebuild()
+            })
+        }
+        if (studyIndex < pack.cards.lastIndex) {
+            root.addView(btn("Next concept") {
+                studyIndex++
+                rebuild()
+            })
+        } else {
+            root.addView(tv("You've reached the end of this pack. You can review any concept again before the quiz.", 14f))
+        }
+        root.addView(btn("Return to lock screen") {
+            studyMode = false
+            rebuild()
+        })
     }
 
     private fun buildQuiz() {
@@ -489,6 +539,8 @@ class MainActivity : Activity() {
             if (quizAnswered) {
                 val ok = lastChoice == qn.correct
                 root.addView(tv(if (ok) "Correct" else "Wrong. Answer: ${qn.options[qn.correct]}", 18f))
+                root.addView(tv("Why this is the answer", 17f))
+                root.addView(tv(qn.explanation, 15f))
                 root.addView(btn(if (quizIdx + 1 < quiz.size) "Next" else "See result") { nextQuestion() })
             }
         }
