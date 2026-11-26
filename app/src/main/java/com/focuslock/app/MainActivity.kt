@@ -444,10 +444,12 @@ class MainActivity : Activity() {
                         tbPage = lesson.first
                         rebuild()
                     })
-                } else {
-                    // Only if the lesson list could not be read.
+                }
+
+                if (packs.isNotEmpty()) {
+                    root.addView(tv("Or choose a flashcard pack", 18f))
                     for (p in packs) {
-                        root.addView(btn("Quiz topic: ${p.name}") {
+                        root.addView(btn("Study pack: ${p.name}") {
                             Session.setTopic(this, p.name)
                             rebuild()
                         })
