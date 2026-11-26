@@ -24,4 +24,21 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+
+    // Always sign debug APKs with the repository's restored key.
+    // This prevents Gradle from silently generating a different key on a fresh runner.
+    signingConfigs {
+        create("stableDebug") {
+            storeFile = file(System.getProperty("user.home") + "/.android/debug.keystore")
+            storePassword = "android"
+            keyAlias = "androiddebugkey"
+            keyPassword = "android"
+        }
+    }
+
+    buildTypes {
+        getByName("debug") {
+            signingConfig = signingConfigs.getByName("stableDebug")
+        }
+    }
 }
