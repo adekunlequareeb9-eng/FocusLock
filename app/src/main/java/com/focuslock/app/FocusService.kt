@@ -2,6 +2,8 @@ package com.focuslock.app
 
 import android.accessibilityservice.AccessibilityService
 import android.content.Intent
+import android.os.Handler
+import android.os.Looper
 import android.os.SystemClock
 import android.view.accessibility.AccessibilityEvent
 
@@ -11,9 +13,30 @@ class FocusService : AccessibilityService() {
     private var allowedAt = 0L
     private var lastBounce = 0L
 
+    private val handler = Handler(Looper.getMainLooper())
+
+    // Android starts this service by itself after every boot, so this loop is what notices a
+    // fresh boot, counts down the delay and starts the auto lock.
+    private val autoLoop = object : Runnable {
+        override fun run() {
+            try {
+                if (Session.autoTick(this@FocusService)) bounce()
+            } catch (_: Exception) {
+            }
+            handler.postDelayed(this, 5_000L)
+        }
+    }
+
     override fun onServiceConnected() {
         super.onServiceConnected()
         refreshAllowed()
+        handler.removeCallbacks(autoLoop)
+        handler.post(autoLoop)
+    }
+
+    override fun onDestroy() {
+        handler.removeCallbacks(autoLoop)
+        super.onDestroy()
     }
 
     private fun refreshAllowed() {

@@ -29,9 +29,6 @@ class MainActivity : Activity() {
     private var exitAt = 0L
     private var notice: String? = null
 
-    private var studyIdx = -1
-    private var studyShowAnswer = false
-
     private var tbPage = -1           // current textbook PDF page, -1 = not reading
     private var tbBmp: Bitmap? = null
 
@@ -44,6 +41,9 @@ class MainActivity : Activity() {
     private var lastChoice = -1
 
     private var minutesBox: EditText? = null
+    private var delayBox: EditText? = null
+    private var lenBox: EditText? = null
+    private var autoView: TextView? = null
     private var timerView: TextView? = null
     private var commitView: TextView? = null
     private var diagView: TextView? = null
@@ -98,6 +98,14 @@ class MainActivity : Activity() {
     // ---------------------------------------------------------------- state
 
     private fun render() {
+        // Notices a fresh boot and starts the auto lock when its delay is over.
+        if (Session.autoTick(this)) {
+            exitAt = 0L
+            resetQuiz()
+            tbPage = -1
+            notice = "Auto lock started."
+        }
+
         val svc = serviceEnabled()
         val ovl = overlayOk()
         val newPhase = when {
@@ -110,8 +118,6 @@ class MainActivity : Activity() {
             notice = "No topic chosen in time: +${Session.NO_TOPIC_PENALTY_MIN} minutes added."
         }
         if (newPhase != 2) {
-            studyIdx = -1
-            studyShowAnswer = false
             tbPage = -1
         }
         if (newPhase == 3 && quiz.isEmpty()) {
@@ -124,8 +130,8 @@ class MainActivity : Activity() {
         }
         if (newPhase != 3 && quiz.isNotEmpty()) resetQuiz()
 
-        val newSig = "$newPhase|$svc|$ovl|${Session.topic(this).isBlank()}|$studyIdx|" +
-            "$studyShowAnswer|$tbPage|$quizIdx|$quizAnswered|${notice ?: ""}"
+        val newSig = "$newPhase|$svc|$ovl|${Session.topic(this).isBlank()}|$tbPage|" +
+            "$quizIdx|$quizAnswered|${notice ?: ""}"
         if (newSig != sig) {
             sig = newSig
             phase = newPhase
@@ -140,6 +146,14 @@ class MainActivity : Activity() {
     }
 
     private fun tickViews() {
+        if (phase == 1) {
+            val left = Session.autoDueSec(this)
+            autoView?.text = if (left < 0) {
+                "No auto lock is waiting. One is scheduled every time the phone is turned on."
+            } else {
+                String.format("Auto lock starts in %02d:%02d:%02d", left / 3600, (left % 3600) / 60, left % 60)
+            }
+        }
         if (phase == 2) {
             val s = Session.remainingMs(this) / 1000
             timerView?.text = String.format("%02d:%02d:%02d", s / 3600, (s % 3600) / 60, s % 60)
@@ -166,7 +180,6 @@ class MainActivity : Activity() {
                 exitAt = 0L
                 Session.finish(this)
                 resetQuiz()
-                studyIdx = -1
                 tbPage = -1
                 notice = "Emergency exit used."
                 rebuild()
@@ -251,9 +264,8 @@ class MainActivity : Activity() {
             }
         } else {
             Session.failQuiz(this)
-            notice = "Quiz failed ($score/$total, needed $need). +${Session.QUIZ_FAIL_PENALTY_MIN} minutes. Study the cards and try again."
+            notice = "Quiz failed ($score/$total, needed $need). +${Session.QUIZ_FAIL_PENALTY_MIN} minutes. Re-read the lesson and try again."
         }
-        studyIdx = -1
         tbPage = -1
         rebuild()
     }
@@ -270,6 +282,12 @@ class MainActivity : Activity() {
     private fun btn(s: String, f: () -> Unit) = Button(this).apply {
         text = s
         setOnClickListener { f() }
+    }
+
+    private fun numberBox(initial: Int) = EditText(this).apply {
+        inputType = InputType.TYPE_CLASS_NUMBER
+        setText(initial.toString())
+        setTextColor(Color.WHITE)
     }
 
     private fun open(i: Intent) {
@@ -298,7 +316,8 @@ class MainActivity : Activity() {
         root.removeAllViews()
         tbBmp?.recycle()
         tbBmp = null
-        minutesBox = null; timerView = null; commitView = null; diagView = null; exitBtn = null
+        minutesBox = null; delayBox = null; lenBox = null; autoView = null
+        timerView = null; commitView = null; diagView = null; exitBtn = null
         root.addView(tv("Focus Lock", 28f))
         when (phase) {
             0 -> buildSetup(svc, ovl)
@@ -335,11 +354,7 @@ class MainActivity : Activity() {
     private fun buildIdle() {
         notice?.let { root.addView(tv(it, 16f)) }
         root.addView(tv("Minutes to lock (max ${Session.MAX_MINUTES}):"))
-        minutesBox = EditText(this).apply {
-            inputType = InputType.TYPE_CLASS_NUMBER
-            setText("5")
-            setTextColor(Color.WHITE)
-        }
+        minutesBox = numberBox(5)
         root.addView(minutesBox)
         root.addView(tv(
             "After you start, pick a study topic within ${Session.COMMIT_WINDOW_SEC / 60} minutes or " +
@@ -350,12 +365,30 @@ class MainActivity : Activity() {
             val m = minutesBox?.text?.toString()?.toIntOrNull() ?: 5
             exitAt = 0L
             notice = null
-            studyIdx = -1
             tbPage = -1
             resetQuiz()
             Session.start(this, m)
             rebuild()
         })
+
+        root.addView(tv(" "))
+        root.addView(tv("Auto lock after every boot", 20f))
+        root.addView(tv("Starts this many minutes after the phone is turned on (1-${Session.AUTO_DELAY_MAX_MIN}):", 14f))
+        delayBox = numberBox(Session.autoDelayMin(this))
+        root.addView(delayBox)
+        root.addView(tv("Stays locked for this many minutes (${Session.AUTO_LEN_MIN_MIN}-${Session.MAX_MINUTES}):", 14f))
+        lenBox = numberBox(Session.autoLenMin(this))
+        root.addView(lenBox)
+        root.addView(btn("Save auto lock (used from the next boot)") {
+            val d = delayBox?.text?.toString()?.toIntOrNull() ?: Session.AUTO_DELAY_DEFAULT_MIN
+            val l = lenBox?.text?.toString()?.toIntOrNull() ?: Session.AUTO_LEN_MIN_MIN
+            Session.setAuto(this, d, l)
+            notice = "Auto lock saved: ${Session.autoDelayMin(this)} min after the phone starts, locked for ${Session.autoLenMin(this)} min."
+            rebuild()
+        })
+        autoView = tv("", 14f)
+        root.addView(autoView)
+
         root.addView(tv(" "))
         root.addView(btn("Open battery settings") {
             open(Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS))
@@ -369,7 +402,6 @@ class MainActivity : Activity() {
 
         val topic = Session.topic(this)
         val packs = Packs.load(this)
-        val pack = packs.firstOrNull { it.name == topic }
         val lesson = Textbook.current(this)
 
         if (tbPage >= 0 && lesson != null && Textbook.open(this, lesson.file)) {
@@ -401,31 +433,7 @@ class MainActivity : Activity() {
                 tbPage = -1
                 rebuild()
             })
-        } else if (studyIdx >= 0 && pack != null && pack.cards.isNotEmpty()) {
-            val i = studyIdx % pack.cards.size
-            val card = pack.cards[i]
-            root.addView(tv("${pack.name}   ${i + 1}/${pack.cards.size}", 14f))
-            root.addView(tv(card.q, 22f))
-            if (studyShowAnswer) {
-                root.addView(tv(card.a, 22f))
-            } else {
-                root.addView(btn("Show answer") {
-                    studyShowAnswer = true
-                    rebuild()
-                })
-            }
-            root.addView(btn("Next card") {
-                studyIdx = (i + 1) % pack.cards.size
-                studyShowAnswer = false
-                rebuild()
-            })
-            root.addView(btn("Back") {
-                studyIdx = -1
-                studyShowAnswer = false
-                rebuild()
-            })
         } else {
-            studyIdx = -1
             tbPage = -1
             if (topic.isBlank()) {
                 commitView = tv("", 16f)
@@ -436,12 +444,14 @@ class MainActivity : Activity() {
                         tbPage = lesson.first
                         rebuild()
                     })
-                }
-                for (p in packs) {
-                    root.addView(btn("Study: ${p.name}") {
-                        Session.setTopic(this, p.name)
-                        rebuild()
-                    })
+                } else {
+                    // Only if the lesson list could not be read.
+                    for (p in packs) {
+                        root.addView(btn("Quiz topic: ${p.name}") {
+                            Session.setTopic(this, p.name)
+                            rebuild()
+                        })
+                    }
                 }
             } else if (topic.startsWith(Textbook.PREFIX) && lesson != null) {
                 root.addView(tv("Studying: ${lesson.title}. A quiz unlocks the phone when the timer ends.", 16f))
@@ -450,12 +460,7 @@ class MainActivity : Activity() {
                     rebuild()
                 })
             } else {
-                root.addView(tv("Studying: $topic. A quiz unlocks the phone when the timer ends.", 16f))
-                root.addView(btn("Open study cards") {
-                    studyIdx = 0
-                    studyShowAnswer = false
-                    rebuild()
-                })
+                root.addView(tv("Quiz topic: $topic. A quiz unlocks the phone when the timer ends.", 16f))
             }
             root.addView(tv(" ", 8f))
             root.addView(btn("Phone") { open(Session.dialIntent()) })

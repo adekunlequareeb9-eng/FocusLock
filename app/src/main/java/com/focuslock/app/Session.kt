@@ -2,6 +2,7 @@ package com.focuslock.app
 
 import android.content.Context
 import android.content.Intent
+import android.os.SystemClock
 import android.provider.AlarmClock
 import android.provider.Telephony
 import android.telecom.TelecomManager
@@ -15,6 +16,10 @@ object Session {
     private const val KEY_LAST_PKG = "last_pkg"
     private const val KEY_LAST_AT = "last_at"
     private const val KEY_BOUNCES = "bounces"
+    private const val KEY_LAST_ELAPSED = "last_elapsed"   // last seen SystemClock.elapsedRealtime (drops after a reboot)
+    private const val KEY_AUTO_AT = "auto_at_elapsed"      // elapsedRealtime when the auto lock is due, 0 = none
+    private const val KEY_AUTO_DELAY = "auto_delay_min"
+    private const val KEY_AUTO_LEN = "auto_len_min"
 
     // ---- Tune these ----
     const val MAX_MINUTES = 240            // hard cap on the starting duration
@@ -23,6 +28,11 @@ object Session {
     const val NO_TOPIC_PENALTY_MIN = 10    // added if no topic is picked in time
     const val QUIZ_FAIL_PENALTY_MIN = 10   // added if the quiz is failed
     const val QUIZ_QUESTIONS = 5           // questions per quiz (needs 80% to pass)
+
+    // Auto lock after every boot
+    const val AUTO_DELAY_DEFAULT_MIN = 60  // default: 1 hour after the phone is turned on
+    const val AUTO_DELAY_MAX_MIN = 180     // starts at most 3 hours after the phone is turned on
+    const val AUTO_LEN_MIN_MIN = 180       // stays locked at least 3 hours (upper cap is MAX_MINUTES)
 
     private fun prefs(c: Context) = c.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
 
@@ -85,6 +95,56 @@ object Session {
             .putLong(KEY_DEADLINE, 0L)
             .commit()
         return true
+    }
+
+    // ---------------------------------------------------------------- auto lock after boot
+
+    fun autoDelayMin(c: Context): Int =
+        prefs(c).getInt(KEY_AUTO_DELAY, AUTO_DELAY_DEFAULT_MIN).coerceIn(1, AUTO_DELAY_MAX_MIN)
+
+    fun autoLenMin(c: Context): Int =
+        prefs(c).getInt(KEY_AUTO_LEN, AUTO_LEN_MIN_MIN).coerceIn(AUTO_LEN_MIN_MIN, MAX_MINUTES)
+
+    fun setAuto(c: Context, delayMin: Int, lenMin: Int) {
+        prefs(c).edit()
+            .putInt(KEY_AUTO_DELAY, delayMin.coerceIn(1, AUTO_DELAY_MAX_MIN))
+            .putInt(KEY_AUTO_LEN, lenMin.coerceIn(AUTO_LEN_MIN_MIN, MAX_MINUTES))
+            .commit()
+    }
+
+    // Seconds until the auto lock starts, or -1 if none is waiting.
+    fun autoDueSec(c: Context): Long {
+        val at = prefs(c).getLong(KEY_AUTO_AT, 0L)
+        if (at == 0L) return -1L
+        return ((at - SystemClock.elapsedRealtime()) / 1000L).coerceAtLeast(0L)
+    }
+
+    // Call often (the accessibility service does every few seconds, the screen every second).
+    // elapsedRealtime only goes backwards when the phone was restarted, so a lower value than the
+    // last one seen means a fresh boot: schedule the auto lock. When it is due, start the lock.
+    // Returns true when a lock was just started.
+    fun autoTick(c: Context): Boolean {
+        val p = prefs(c)
+        val now = SystemClock.elapsedRealtime()
+        val last = p.getLong(KEY_LAST_ELAPSED, 0L)
+        var at = p.getLong(KEY_AUTO_AT, 0L)
+        val ed = p.edit().putLong(KEY_LAST_ELAPSED, now)
+        var important = false
+        if (last > 0L && now < last) {
+            at = now + autoDelayMin(c) * 60_000L
+            ed.putLong(KEY_AUTO_AT, at)
+            important = true
+        }
+        var startNow = false
+        if (at != 0L && now >= at) {
+            ed.putLong(KEY_AUTO_AT, 0L)
+            important = true
+            // If a lock is already running, it simply continues.
+            startNow = !isLocked(c)
+        }
+        if (important) ed.commit() else ed.apply()
+        if (startNow) start(c, autoLenMin(c))
+        return startNow
     }
 
     // Live diagnostics, shown on the locked screen.
