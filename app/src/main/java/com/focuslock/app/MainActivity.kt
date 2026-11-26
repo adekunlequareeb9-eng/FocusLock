@@ -3,6 +3,7 @@ package com.focuslock.app
 import android.app.Activity
 import android.content.ComponentName
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.provider.Settings
 import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -30,8 +32,12 @@ class MainActivity : Activity() {
     private var studyIdx = -1
     private var studyShowAnswer = false
 
+    private var tbPage = -1           // current textbook PDF page, -1 = not reading
+    private var tbBmp: Bitmap? = null
+
     private var quiz: List<Packs.Question> = emptyList()
     private var quizTopic = ""
+    private var quizIsTextbook = false
     private var quizIdx = 0
     private var quizScore = 0
     private var quizAnswered = false
@@ -106,6 +112,7 @@ class MainActivity : Activity() {
         if (newPhase != 2) {
             studyIdx = -1
             studyShowAnswer = false
+            tbPage = -1
         }
         if (newPhase == 3 && quiz.isEmpty()) {
             prepareQuiz()
@@ -118,7 +125,7 @@ class MainActivity : Activity() {
         if (newPhase != 3 && quiz.isNotEmpty()) resetQuiz()
 
         val newSig = "$newPhase|$svc|$ovl|${Session.topic(this).isBlank()}|$studyIdx|" +
-            "$studyShowAnswer|$quizIdx|$quizAnswered|${notice ?: ""}"
+            "$studyShowAnswer|$tbPage|$quizIdx|$quizAnswered|${notice ?: ""}"
         if (newSig != sig) {
             sig = newSig
             phase = newPhase
@@ -160,6 +167,7 @@ class MainActivity : Activity() {
                 Session.finish(this)
                 resetQuiz()
                 studyIdx = -1
+                tbPage = -1
                 notice = "Emergency exit used."
                 rebuild()
                 return
@@ -175,6 +183,7 @@ class MainActivity : Activity() {
     private fun resetQuiz() {
         quiz = emptyList()
         quizTopic = ""
+        quizIsTextbook = false
         quizIdx = 0
         quizScore = 0
         quizAnswered = false
@@ -184,10 +193,15 @@ class MainActivity : Activity() {
     private fun prepareQuiz() {
         val packs = Packs.load(this)
         val wanted = Session.topic(this)
-        var pack = packs.firstOrNull { it.name == wanted }
+        val isTb = wanted.startsWith(Textbook.PREFIX)
+        var pack = if (isTb) {
+            packs.firstOrNull { it.name == Textbook.QUIZ_PACK }
+        } else {
+            packs.firstOrNull { it.name == wanted }
+        }
         if (pack == null && packs.isNotEmpty()) {
             pack = packs.random()
-            Session.setTopic(this, pack.name)
+            if (!isTb) Session.setTopic(this, pack.name)
         }
         if (pack == null || pack.cards.isEmpty()) {
             Session.finish(this)
@@ -195,6 +209,7 @@ class MainActivity : Activity() {
             return
         }
         quizTopic = pack.name
+        quizIsTextbook = isTb
         quiz = Packs.makeQuiz(pack, Session.QUIZ_QUESTIONS)
         quizIdx = 0
         quizScore = 0
@@ -225,15 +240,21 @@ class MainActivity : Activity() {
         val total = quiz.size
         val need = (total * 4 + 4) / 5      // 80%, rounded up
         val score = quizScore
+        val wasTextbook = quizIsTextbook
         resetQuiz()
         if (score >= need) {
             Session.finish(this)
             notice = "Quiz passed ($score/$total). You're free."
+            if (wasTextbook) {
+                Textbook.advance(this)
+                notice = notice + " Next textbook lesson is ready."
+            }
         } else {
             Session.failQuiz(this)
             notice = "Quiz failed ($score/$total, needed $need). +${Session.QUIZ_FAIL_PENALTY_MIN} minutes. Study the cards and try again."
         }
         studyIdx = -1
+        tbPage = -1
         rebuild()
     }
 
@@ -275,6 +296,8 @@ class MainActivity : Activity() {
 
     private fun build(svc: Boolean, ovl: Boolean) {
         root.removeAllViews()
+        tbBmp?.recycle()
+        tbBmp = null
         minutesBox = null; timerView = null; commitView = null; diagView = null; exitBtn = null
         root.addView(tv("Focus Lock", 28f))
         when (phase) {
@@ -328,6 +351,7 @@ class MainActivity : Activity() {
             exitAt = 0L
             notice = null
             studyIdx = -1
+            tbPage = -1
             resetQuiz()
             Session.start(this, m)
             rebuild()
@@ -346,8 +370,38 @@ class MainActivity : Activity() {
         val topic = Session.topic(this)
         val packs = Packs.load(this)
         val pack = packs.firstOrNull { it.name == topic }
+        val lesson = Textbook.current(this)
 
-        if (studyIdx >= 0 && pack != null && pack.cards.isNotEmpty()) {
+        if (tbPage >= 0 && lesson != null && Textbook.open(this, lesson.file)) {
+            val total = lesson.last - lesson.first + 1
+            root.addView(tv("${lesson.title}   page ${tbPage - lesson.first + 1}/$total", 14f))
+            val bmp = Textbook.render(tbPage, resources.displayMetrics.widthPixels - 96)
+            if (bmp != null) {
+                tbBmp = bmp
+                root.addView(ImageView(this).apply {
+                    setImageBitmap(bmp)
+                    adjustViewBounds = true
+                })
+            } else {
+                root.addView(tv("Can't show this page.", 16f))
+            }
+            if (tbPage < lesson.last) {
+                root.addView(btn("Next page") {
+                    tbPage++
+                    rebuild()
+                })
+            }
+            if (tbPage > lesson.first) {
+                root.addView(btn("Previous page") {
+                    tbPage--
+                    rebuild()
+                })
+            }
+            root.addView(btn("Done reading") {
+                tbPage = -1
+                rebuild()
+            })
+        } else if (studyIdx >= 0 && pack != null && pack.cards.isNotEmpty()) {
             val i = studyIdx % pack.cards.size
             val card = pack.cards[i]
             root.addView(tv("${pack.name}   ${i + 1}/${pack.cards.size}", 14f))
@@ -372,15 +426,29 @@ class MainActivity : Activity() {
             })
         } else {
             studyIdx = -1
+            tbPage = -1
             if (topic.isBlank()) {
                 commitView = tv("", 16f)
                 root.addView(commitView)
+                if (lesson != null) {
+                    root.addView(btn("Study next textbook lesson: ${lesson.title}") {
+                        Session.setTopic(this, Textbook.PREFIX + lesson.title)
+                        tbPage = lesson.first
+                        rebuild()
+                    })
+                }
                 for (p in packs) {
                     root.addView(btn("Study: ${p.name}") {
                         Session.setTopic(this, p.name)
                         rebuild()
                     })
                 }
+            } else if (topic.startsWith(Textbook.PREFIX) && lesson != null) {
+                root.addView(tv("Studying: ${lesson.title}. A quiz unlocks the phone when the timer ends.", 16f))
+                root.addView(btn("Open lesson pages") {
+                    tbPage = lesson.first
+                    rebuild()
+                })
             } else {
                 root.addView(tv("Studying: $topic. A quiz unlocks the phone when the timer ends.", 16f))
                 root.addView(btn("Open study cards") {
