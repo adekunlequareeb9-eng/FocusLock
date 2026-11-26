@@ -31,17 +31,27 @@ jobs:
 
       # Keeps the signing key the same on every build, so a new build
       # installs over the old one instead of failing with "App not installed".
-      - name: Restore signing key
+      - name: Restore and verify signing key
         run: |
-          if [ -f signing/debug.keystore.b64 ]; then
-            mkdir -p ~/.android
-            base64 -d signing/debug.keystore.b64 > ~/.android/debug.keystore
-          fi
+          test -s signing/debug.keystore.b64
+          mkdir -p ~/.android
+          base64 -d signing/debug.keystore.b64 > ~/.android/debug.keystore
+          test -s ~/.android/debug.keystore
+          keytool -list -keystore ~/.android/debug.keystore -storepass android -alias androiddebugkey
+          echo "Signing certificate fingerprint:"
+          keytool -list -v -keystore ~/.android/debug.keystore -storepass android -alias androiddebugkey | grep -E "SHA256:"
 
       - name: Build the APK
         run: |
           set -o pipefail
           gradle assembleDebug --stacktrace --no-daemon -PversionCodeOverride=${{ github.run_number }} 2>&1 | tee build.log
+
+      - name: Verify APK signature
+        run: |
+          APK="app/build/outputs/apk/debug/app-debug.apk"
+          APKSIGNER="$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort -V | tail -1)"
+          test -x "$APKSIGNER"
+          "$APKSIGNER" verify --verbose --print-certs "$APK"
 
       # If the build fails, put the important error lines on the run page
       # so they can be copied straight into an AI chat.
