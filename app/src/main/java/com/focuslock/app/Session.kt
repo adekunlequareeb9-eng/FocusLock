@@ -23,7 +23,7 @@ object Session {
 
     // ---- Tune these ----
     const val MAX_MINUTES = 240            // hard cap on the starting duration
-    const val EXIT_DELAY_SEC = 300         // emergency exit wait (5 min)
+    const val EXIT_DELAY_SEC = 900         // emergency exit wait (15 min)
     const val COMMIT_WINDOW_SEC = 120      // time allowed to pick a study topic
     const val NO_TOPIC_PENALTY_MIN = 10    // added if no topic is picked in time
     const val QUIZ_FAIL_PENALTY_MIN = 10   // added if the quiz is failed
