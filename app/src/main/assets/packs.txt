@@ -53,3 +53,277 @@ Q: What does === check in JavaScript?
 A: Same value and same type
 Q: What is the index of the first item in a Python list?
 A: 0
+
+## Programming concepts
+Q: What is a variable?
+A: A named place that stores a value
+Q: What is a function?
+A: A reusable block of code that does one job
+Q: What is a parameter?
+A: A named input a function declares
+Q: What is an argument?
+A: The actual value passed into a function
+Q: What is a loop?
+A: Code that repeats while a condition holds
+Q: What is a conditional?
+A: Code that runs only if a condition is true
+Q: What is a boolean?
+A: A value that is either true or false
+Q: What is an algorithm?
+A: Step-by-step instructions to solve a problem
+Q: What is a bug?
+A: A mistake in code that causes wrong behavior
+Q: What is debugging?
+A: Finding and fixing bugs
+Q: What is a compiler?
+A: Translates source code into machine code before it runs
+Q: What is an interpreter?
+A: Runs source code directly, line by line
+Q: What is syntax?
+A: The grammar rules of a language
+Q: What is a string?
+A: Text data
+Q: What is an array or list?
+A: An ordered collection of items
+Q: What is a dictionary (map)?
+A: A collection of key-value pairs
+Q: What is recursion?
+A: A function that calls itself
+Q: What is a class?
+A: A blueprint for creating objects
+Q: What is an object?
+A: An instance of a class
+Q: What is a library?
+A: Ready-made code you import and reuse
+Q: What is an IDE?
+A: An editor with tools for writing and running code
+Q: What is a comment?
+A: Text in code that the computer ignores
+Q: What is an exception?
+A: An error raised while the program runs
+Q: What is scope?
+A: The part of code where a name can be used
+Q: What is a constant?
+A: A value that should never change
+Q: What is an integer?
+A: A whole number
+Q: What is a float?
+A: A number with a decimal point
+Q: What does DRY stand for?
+A: Don't Repeat Yourself
+Q: What is pseudocode?
+A: A plain-language outline of an algorithm
+Q: What does LIFO mean (a stack)?
+A: Last in, first out
+Q: What does FIFO mean (a queue)?
+A: First in, first out
+Q: What is Big-O notation?
+A: How running time grows as input grows
+Q: What is the Big-O of binary search?
+A: O(log n)
+Q: What is the Big-O of looping once through n items?
+A: O(n)
+Q: What is the Big-O of a loop inside a loop over n items?
+A: O(n squared)
+
+## Python 1 - basics
+Q: Which function prints to the screen in Python?
+A: print()
+Q: Which function reads text typed by the user?
+A: input()
+Q: What type does input() always return?
+A: str
+Q: How do you start a comment in Python?
+A: #
+Q: What does 7 // 2 give?
+A: 3
+Q: What does 7 % 2 give?
+A: 1
+Q: What does 2 ** 3 give?
+A: 8
+Q: What does 7 / 2 give?
+A: 3.5
+Q: How do you turn "5" into an integer?
+A: int("5")
+Q: How do you turn 5 into a string?
+A: str(5)
+Q: What does "ab" * 3 give?
+A: ababab
+Q: What does "Hi" + "!" give?
+A: Hi!
+Q: What does len("hello") return?
+A: 5
+Q: What does "hello".upper() return?
+A: HELLO
+Q: What index is the last item of a list?
+A: -1
+Q: What does "hello"[1] return?
+A: e
+Q: What does "hello"[1:3] return?
+A: el
+Q: How do you put a variable name inside a string?
+A: f"{name}"
+Q: Which keyword means "else if" in Python?
+A: elif
+Q: Which operator tests if two values are equal?
+A: ==
+Q: What are Python's two boolean values?
+A: True and False
+Q: Which loop goes through a sequence?
+A: for
+Q: Which loop repeats while a condition is true?
+A: while
+Q: What does range(3) produce?
+A: 0, 1, 2
+Q: Which keyword exits a loop early?
+A: break
+Q: Which keyword skips to the next loop round?
+A: continue
+Q: What does None mean?
+A: No value
+Q: Why does indentation matter in Python?
+A: It defines code blocks
+Q: What does isinstance(5, int) return?
+A: True
+Q: What does round(2.567, 2) return?
+A: 2.57
+Q: Is Name the same variable as name?
+A: No, Python is case-sensitive
+
+## Python 2 - functions and data
+Q: Which keyword sends a value back from a function?
+A: return
+Q: What does a function return if it has no return line?
+A: None
+Q: How do you give a parameter a default value?
+A: def f(x=1)
+Q: What does *args collect?
+A: Extra positional arguments in a tuple
+Q: What does **kwargs collect?
+A: Extra keyword arguments in a dict
+Q: How do you write a lambda that doubles x?
+A: lambda x: x * 2
+Q: How do you make an empty list?
+A: []
+Q: Which method adds an item to the end of a list?
+A: append()
+Q: Which method removes and returns the last item?
+A: pop()
+Q: Which method removes the first matching value?
+A: remove()
+Q: Which method sorts a list in place?
+A: sort()
+Q: Which function returns a new sorted list?
+A: sorted()
+Q: Are lists mutable?
+A: Yes
+Q: Are tuples mutable?
+A: No
+Q: How do you make an empty dict?
+A: {}
+Q: Which dict method gets a value without a KeyError?
+A: get()
+Q: Which dict method loops over keys and values together?
+A: items()
+Q: What does a set not allow?
+A: Duplicate items
+Q: How do you make an empty set?
+A: set()
+Q: What does [x*x for x in range(3)] give?
+A: [0, 1, 4]
+Q: Which string method splits text into a list?
+A: split()
+Q: Which string method joins a list into one string?
+A: join()
+Q: Which string method removes spaces from both ends?
+A: strip()
+Q: Which keyword checks if an item is in a list?
+A: in
+Q: How do you open a file safely for reading?
+A: with open("f.txt") as f:
+Q: Which file mode writes (and overwrites)?
+A: "w"
+Q: Which file mode adds to the end?
+A: "a"
+Q: Which pair of keywords catches errors?
+A: try and except
+Q: Which block always runs after try?
+A: finally
+Q: Which keyword raises an error yourself?
+A: raise
+Q: Which keyword brings in a module?
+A: import
+Q: Which command installs a package?
+A: pip install
+Q: What is the name of a class's constructor method?
+A: __init__
+Q: What does self refer to in a method?
+A: The current object
+Q: What does enumerate() give you?
+A: Index and item pairs
+Q: What does zip() do?
+A: Pairs up items from several sequences
+
+## Web basics 1 - HTML and CSS
+Q: Which HTML tag makes the biggest heading?
+A: h1
+Q: Which tag makes a paragraph?
+A: p
+Q: Which tag makes a link?
+A: a
+Q: Which attribute holds a link's address?
+A: href
+Q: Which tag shows an image?
+A: img
+Q: Which attribute holds the image file?
+A: src
+Q: Which tag makes an unordered (bullet) list?
+A: ul
+Q: Which tag makes a list item?
+A: li
+Q: Which tag makes an ordered (numbered) list?
+A: ol
+Q: Which tag is a generic block container?
+A: div
+Q: Which tag is a generic inline container?
+A: span
+Q: Which tag makes a button?
+A: button
+Q: Which tag makes a text box or checkbox?
+A: input
+Q: Which tag groups form fields?
+A: form
+Q: Which tag holds metadata and the title?
+A: head
+Q: Which tag holds the visible page?
+A: body
+Q: Which tag makes a table row?
+A: tr
+Q: Which tag makes a table cell?
+A: td
+Q: Which CSS property sets text color?
+A: color
+Q: Which CSS property sets the background?
+A: background
+Q: Which CSS property sets space inside an element's border?
+A: padding
+Q: Which CSS property sets space outside an element's border?
+A: margin
+Q: Which CSS property sets font size?
+A: font-size
+Q: Which CSS selector picks an element by id?
+A: #name
+Q: Which CSS selector picks elements by class?
+A: .name
+Q: Which CSS value makes a flexible row layout?
+A: display: flex
+Q: Which CSS property rounds corners?
+A: border-radius
+Q: Which CSS feature changes styles by screen size?
+A: Media queries
+Q: What is the box model?
+A: Content, padding, border, margin
+Q: Which HTML tag links an external CSS file?
+A: link
+Q: Which tag adds JavaScript?
+A: script
