@@ -1,486 +1,486 @@
 # Focus Lock study packs. Edit this file on GitHub to add your own.
-# Format: "## Pack name", then pairs of "Q:" and "A:" lines (one line each).
+# Format: "## Pack name", then for each card: "Q:" (question), "A:" (short answer), "E:" (explanation). One line each.
 # Keep answers short, and give each pack at least 4 cards with different answers.
 
 ## Arabic grammar basics
 Q: What are the three kinds of words (الكلمة)?
 A: اسم، فعل، حرف
-E: Arabic words are grouped by their job. اسم names a person, thing, or idea; فعل expresses an action or state linked to time; حرف connects words or adds a grammatical meaning. For example, كِتَابٌ is an اسم, كَتَبَ is a فعل, and فِي is a حرف.
+E: Arabic grammar starts by sorting every word into one of three kinds, because each kind follows different rules. اسم names a person, place, thing, or idea (كِتَابٌ، مُحَمَّدٌ) and can take case endings. فعل shows an action or state tied to a time (كَتَبَ، يَكْتُبُ، اكْتُبْ). حرف has no full meaning on its own; it only links words or adds a meaning (فِي، مِنْ، لَمْ). In كَتَبَ مُحَمَّدٌ فِي الْكِتَابِ all three appear. Quick test: a word that accepts ال or tanween is an اسم; a word that accepts قَدْ or سَوْفَ is a فعل.
 Q: What are the three cases (الإعراب) of a noun?
 A: رفع، نصب، جر
-E: A noun's case shows its grammatical role in the sentence. رفع is commonly used for subjects and predicates, نصب for objects and some other roles, and جر after prepositions and in possessive constructions.
+E: A noun's case is the ending that shows its job in the sentence, so the same word can change its last vowel. رفع is used for the doer and the main parts of a nominal sentence, نصب for the object and several other roles, and جر after a preposition. Compare جَاءَ الطَّالِبُ (رفع), رَأَيْتُ الطَّالِبَ (نصب), سَلَّمْتُ عَلَى الطَّالِبِ (جر): one word, three endings, three jobs. Common mistake: judging the case from where the word sits in the English translation instead of from its role in the Arabic sentence.
 Q: What is the sign of الرفع on a regular singular noun?
 A: الضمة
-E: For an ordinary singular noun, the visible sign of رفع is ضمة (ـُ). For example, مُحَمَّدٌ. Other noun types can have different signs, so this is the basic starting rule.
+E: The sign (علامة) is the vowel on the last letter of the word. For an ordinary singular noun, رفع shows as ضمة (ـُ), or double ضمة (ـٌ) when the noun has tanween, as in مُحَمَّدٌ مُجْتَهِدٌ. Learn this as the default rule first: later you will meet nouns (dual, sound plurals, the five nouns) that use letters such as ا و ي instead of a short vowel.
 Q: What is the sign of النصب on a regular singular noun?
 A: الفتحة
-E: For an ordinary singular noun, the visible sign of نصب is فتحة (ـَ), as in رَأَيْتُ مُحَمَّدًا. The case is connected to the noun's role, not simply its position in English translation.
+E: For an ordinary singular noun, نصب shows as فتحة (ـَ), or فتحتان (ـً) with tanween, as in رَأَيْتُ مُحَمَّدًا. Notice that with tanween the نصب form is usually written with an extra ا (اً). The case comes from the noun's role (here it is the object), not from its position: أَكَلَ التُّفَّاحَةَ عَلِيٌّ still marks التُّفَّاحَةَ as نصب because it is the thing eaten.
 Q: What is the sign of الجر on a regular singular noun?
 A: الكسرة
-E: For an ordinary singular noun, the visible sign of جر is كسرة (ـِ), as in فِي الْبَيْتِ. A preposition such as فِي makes the following noun مجرورًا.
+E: For an ordinary singular noun, جر shows as كسرة (ـِ), or كسرتان (ـٍ) with tanween. It appears after a preposition (فِي الْبَيْتِ) and on the second word of a possessive phrase (كِتَابُ الطَّالِبِ). Tip: when you see a كسرة at the end of a noun, look back for the preposition or the first word of the possessive phrase that caused it.
 Q: What case is the مبتدأ (subject of a nominal sentence) in?
 A: مرفوع
-E: The مبتدأ is the noun a nominal sentence begins by talking about, so it is مرفوع. In الْجَوُّ جَمِيلٌ, الْجَوُّ is the مبتدأ.
+E: The مبتدأ is the noun a nominal sentence starts with and talks about; it is always مرفوع. In الْجَوُّ جَمِيلٌ, الْجَوُّ is the مبتدأ and ends with ضمة. Common mistake: confusing it with the فاعل. The فاعل comes after a verb; the مبتدأ starts a sentence that has no verb at the front. Both happen to be مرفوع.
 Q: What case is the خبر (predicate) of a simple nominal sentence in?
 A: مرفوع
-E: The خبر tells us something about the مبتدأ and is مرفوع in a basic nominal sentence. In الْجَوُّ جَمِيلٌ, جَمِيلٌ is the خبر.
+E: The خبر completes the meaning of the مبتدأ, and in a basic nominal sentence it is مرفوع too. In الْجَوُّ جَمِيلٌ, جَمِيلٌ is the خبر. Remember the pair: مبتدأ + خبر are both مرفوع until a particle like إنّ or كان enters and changes one of them, which is exactly the next two cards.
 Q: What case is the فاعل (doer of the verb) in?
 A: مرفوع
-E: The فاعل identifies who or what performs the action. It is مرفوع: in كَتَبَ الطَّالِبُ, الطَّالِبُ is the one who wrote.
+E: The فاعل is whoever or whatever performs the verb's action, and it is مرفوع. In كَتَبَ الطَّالِبُ the student is the writer, so الطَّالِبُ has ضمة. In Arabic the verb comes first and the فاعل follows it right after, so do not look for the doer before the verb the way English does.
 Q: What case is the مفعول به (direct object) in?
 A: منصوب
-E: The مفعول به receives the action of the verb and is منصوب. In قَرَأَ الطَّالِبُ الْكِتَابَ, الْكِتَابَ is what the student read.
+E: The مفعول به is what the action lands on, and it is منصوب. In قَرَأَ الطَّالِبُ الْكِتَابَ the student is the فاعل (ضمة) and the book is the مفعول به (فتحة). Check: ask the verb ماذا? or مَنْ? (what? whom?); the answer is the مفعول به.
 Q: What case is a noun right after a preposition (حرف جر) in?
 A: مجرور
-E: A preposition governs the noun that follows it, making that noun مجرورًا. In فِي الْمَسْجِدِ, فِي is the preposition and الْمَسْجِدِ is مجرور.
+E: A preposition (فِي، مِنْ، إِلَى، عَلَى، بِـ) governs the noun after it and makes it مجرور. In ذَهَبَ الطَّالِبُ إِلَى الْمَدْرَسَةِ, الْمَدْرَسَةِ has كسرة. The preposition itself never changes (it is a حرف); only the noun after it takes the ending.
 Q: What does a nominal sentence (الجملة الاسمية) begin with?
 A: اسم
-E: A basic nominal sentence begins with an اسم and usually has a مبتدأ followed by a خبر. Example: الطَّالِبُ مُجْتَهِدٌ — the student is hardworking.
+E: A nominal sentence starts with a noun and normally has two parts: the مبتدأ and the خبر, as in الطَّالِبُ مُجْتَهِدٌ (the student is hardworking). It describes a state rather than an event. Do not be fooled by what comes second: الطَّالِبُ يَكْتُبُ is still nominal because the first word is a noun, and the verb phrase is its خبر.
 Q: What does a verbal sentence (الجملة الفعلية) begin with?
 A: فعل
-E: A basic verbal sentence begins with a فعل, then commonly names the doer. Example: ذَهَبَ الطَّالِبُ — the student went.
+E: A verbal sentence starts with a verb, then the doer, then any object, as in ذَهَبَ الطَّالِبُ (the student went) or قَرَأَ الطَّالِبُ الْكِتَابَ. It usually reports an event. To classify any sentence, look only at its first word: verb means verbal, noun means nominal.
 Q: What is the effect of إنّ on the sentence?
 A: تنصب الاسم وترفع الخبر
-E: إنَّ is one of the particles that changes the case of the two parts: it makes its اسم منصوب and its خبر مرفوع. Example: إِنَّ الطَّالِبَ مُجْتَهِدٌ.
+E: إِنَّ enters a nominal sentence and changes it: the old مبتدأ becomes its اسم and turns منصوب, while the خبر stays مرفوع. الطَّالِبُ مُجْتَهِدٌ becomes إِنَّ الطَّالِبَ مُجْتَهِدٌ, meaning “indeed, the student is hardworking.” Memory trick: إنّ pushes its first word UP to نصب (فتحة) and leaves the second at رفع. Its sisters (أنّ، كأنّ، لكنّ، ليت، لعلّ) work the same way.
 Q: What is the effect of كان on the sentence?
 A: ترفع الاسم وتنصب الخبر
-E: كَانَ enters a nominal sentence, leaving its اسم مرفوع and making its خبر منصوب. Example: كَانَ الطَّالِبُ مُجْتَهِدًا.
+E: كَانَ puts a nominal sentence in the past: the old مبتدأ becomes its اسم and stays مرفوع, while the old خبر becomes منصوب. الطَّالِبُ مُجْتَهِدٌ becomes كَانَ الطَّالِبُ مُجْتَهِدًا. Do not mix it up with إنّ: كان changes the SECOND word (خبر to نصب) and إنّ changes the FIRST word (اسم to نصب). Its sisters include أَصْبَحَ، أَمْسَى، ظَلَّ، لَيْسَ.
 
 ## Coding basics
 Q: In Python, which keyword defines a function?
 A: def
-E: def begins a function definition. The indented lines beneath it form the function body, and you can call the function later by its name.
+E: def starts a function definition: def greet(name): then an indented body. Nothing inside runs until you call the function with greet('Ada'). Common mistake: forgetting the colon at the end of the def line, or writing the body without indentation, both cause an error.
 Q: What does len([1, 2, 3]) return in Python?
 A: 3
-E: len() counts how many items are in a collection. The list contains three items, so the result is 3; it does not add the values together.
+E: len() counts how many items a collection holds, so the list of three numbers gives 3, not 6 (the sum). It works on lists, strings, dictionaries, sets, and tuples: len('hello') is 5. Common use: the last valid index of a list is len(items) - 1.
 Q: In Kotlin, which keyword declares a read-only variable?
 A: val
-E: val creates a variable whose reference cannot be reassigned after it is set. Use it when the value should stay the same, which makes code easier to reason about.
+E: val means the name cannot be pointed at a different value after it is set: val age = 20, then age = 21 is a compile error. It does not freeze the object itself: a val holding a mutable list can still have items added. Good habit: start with val and switch to var only when you truly need to reassign.
 Q: In Kotlin, which keyword declares a variable that can change?
 A: var
-E: var creates a variable that can be assigned a new value later. Choose var only when the value really needs to change; otherwise val is usually safer.
+E: var lets you assign a new value later: var score = 0, then score = score + 10 is fine. The type is fixed once chosen (an Int variable cannot suddenly hold text). Use var for counters and state that really changes, and val for everything else, which makes bugs easier to find.
 Q: What does HTML stand for?
 A: HyperText Markup Language
-E: HTML is the markup language that gives a web page its structure and meaning. Headings, paragraphs, links, and images are represented by HTML elements.
+E: HTML describes the structure and meaning of a web page using elements written as tags, like <h1>Title</h1> and <p>Text</p>. It is a markup language, not a programming language: it labels content but does not do calculations or make decisions. A page normally combines three things: HTML for structure, CSS for looks, JavaScript for behaviour.
 Q: What does CSS stand for?
 A: Cascading Style Sheets
-E: CSS controls how HTML content looks: layout, colours, spacing, fonts, and responsive styling. HTML describes the content; CSS styles its presentation.
+E: CSS controls how HTML looks: colours, fonts, spacing, layout, and responsive behaviour. A rule has a selector and declarations: p { color: blue; }. 'Cascading' means that when several rules target the same element, the browser decides which one wins by specificity and order, so a later or more specific rule overrides an earlier or general one.
 Q: What does API stand for?
 A: Application Programming Interface
-E: An API is a defined way for one piece of software to request data or actions from another. It acts like a contract describing what can be requested and what comes back.
+E: An API is a set of agreed ways for one program to ask another program for data or actions, without knowing how the other works inside. Example: a weather app sends a request to a weather API and gets the temperature back, usually as JSON. Think of a restaurant menu: you choose from what is offered, and the kitchen stays hidden.
 Q: What does git commit do?
 A: Saves your staged changes as a snapshot in history
-E: A commit records the staged changes as a named snapshot in a repository's history. It does not automatically include every modified file; you normally stage the changes first with git add.
+E: The usual flow is git add (choose what goes into the snapshot), then git commit -m 'message' (save the snapshot with a note). A commit is saved locally; it is not shared until you run git push. Common mistake: editing files and committing without git add, which commits nothing new. Write messages that say what changed so you can find it later.
 Q: What does === check in JavaScript?
 A: Same value and same type
-E: Strict equality compares both value and type without converting one side to match the other. For example, 5 === '5' is false because one value is a number and the other is text.
+E: === compares both value and type without converting anything: 5 === '5' is false because a number is not text. The looser == converts types first, so 5 == '5' is true, which causes surprising bugs. Rule of thumb: use === by default, and avoid == unless you really want the conversion.
 Q: What is the index of the first item in a Python list?
 A: 0
-E: Python sequences use zero-based indexing. That means the first item is at position 0, the second at 1, and the third at 2.
+E: Python counts positions from zero, so for names = ['Ada', 'Bo', 'Cy'] we have names[0] = 'Ada', names[1] = 'Bo', and names[2] = 'Cy'. The last valid index is len(names) - 1, and asking for names[3] raises IndexError. Python also allows names[-1] to mean the last item.
 
 ## Programming concepts
 Q: What is a variable?
 A: A named place that stores a value
-E: A variable is a name that lets your program refer to a stored value. You can read that value later and, when the language allows it, assign a different value to the name.
+E: A variable is a label attached to a value so your program can use it again later: age = 20, then print(age). Choose names that describe the content (total_price is better than x). A variable holds one value at a time, but you can give it a new value whenever the language allows it.
 Q: What is a function?
 A: A reusable block of code that does one job
-E: A function groups instructions under a name so you can run that task whenever needed. It can accept inputs, perform work, and optionally return a result.
+E: A function packages steps under a name, so you write the logic once and call it as often as needed. Example: def area(w, h): return w * h, then area(3, 4) gives 12. Good functions do one clear job, have a descriptive name, and avoid depending on hidden outside state.
 Q: What is a parameter?
 A: A named input a function declares
-E: A parameter is a named input written in a function's definition. It acts like a placeholder that receives a value when the function is called.
+E: A parameter is the name listed in the function's definition, acting as an empty slot waiting for a value. In def greet(name), name is the parameter. Inside the function you use the name like a variable; it only receives a real value when somebody calls the function.
 Q: What is an argument?
 A: The actual value passed into a function
-E: An argument is the actual value supplied when calling a function. If a function is defined as greet(name), then greet('Ada') passes 'Ada' as the argument for name.
+E: An argument is the real value you hand over when you call the function. In greet('Ada'), 'Ada' is the argument and fills the parameter name. Easy way to remember: parameters are in the definition (the slot), arguments are in the call (the value). People often mix the two words, but the difference matters in exams.
 Q: What is a loop?
 A: Code that repeats while a condition holds
-E: A loop repeats a block of instructions. It is useful when you need to process many items or repeat work until a condition changes.
+E: A loop runs the same block again and again, so you do not copy and paste code. A for loop visits each item in a collection (for name in names:), and a while loop repeats as long as a condition stays true. Danger: a while loop whose condition never becomes false runs forever, so always make sure something inside changes it.
 Q: What is a conditional?
 A: Code that runs only if a condition is true
-E: A conditional chooses whether code should run based on a true-or-false test. It lets a program respond differently to different situations.
+E: A conditional makes the program choose: if age >= 18: allow entry, else: refuse. The condition is a true-or-false test, and only the matching branch runs. You can chain extra choices with elif (Python) or else if (many other languages). Conditionals are how programs react to different input.
 Q: What is a boolean?
 A: A value that is either true or false
-E: A boolean has only two possible values: true or false. Programs use booleans to represent conditions and make decisions.
+E: A boolean has exactly two possible values, true and false, and it is the result of every comparison: 5 > 3 gives true. Programs combine booleans with and, or, and not to build bigger conditions, such as logged_in and has_paid. Every if statement depends on a boolean.
 Q: What is an algorithm?
 A: Step-by-step instructions to solve a problem
-E: An algorithm is a clear sequence of steps for solving a problem. Code is one way to express an algorithm so a computer can carry it out.
+E: An algorithm is a clear, finite list of steps that solves a problem, independent of any programming language. Example: to find the largest number, remember the first one, compare it with each next number, and keep the bigger. A recipe is an algorithm for food. Code is simply one way to write an algorithm so a computer can run it.
 Q: What is a bug?
 A: A mistake in code that causes wrong behavior
-E: A bug is a problem in a program that makes it behave incorrectly or unexpectedly. The program may still run; the result or behaviour is what is wrong.
+E: A bug is a flaw in a program that makes it crash or give wrong results. Typical causes are a wrong condition (> instead of >=), an off-by-one loop, a typing slip in a name, or an unexpected input. Note that a program can run with no error message and still have a bug if its answer is wrong.
 Q: What is debugging?
 A: Finding and fixing bugs
-E: Debugging is the process of locating the cause of a bug, understanding it, and correcting it. Reading errors, checking values, and testing small sections are common techniques.
+E: Debugging is detective work: reproduce the problem, find where the program's real behaviour starts to differ from what you expected, then fix the cause. Useful tools are reading the error message from the bottom up, printing values, and testing small pieces separately. Fix the cause, not just the symptom, otherwise the bug returns.
 Q: What is a compiler?
 A: Translates source code into machine code before it runs
-E: A compiler translates a program from its source language into another form, often machine code or bytecode, before execution. Different languages and tools use different compilation steps.
+E: A compiler translates the whole program into another form (such as machine code) before it runs, and reports many errors at that stage. Languages like C and Kotlin are compiled. The result usually runs fast and you can run it without the compiler. Contrast with an interpreter, which reads and runs the source while the program executes.
 Q: What is an interpreter?
 A: Runs source code directly, line by line
-E: An interpreter executes a program using an interpreter runtime. The phrase 'line by line' is a simplification; many interpreters parse or compile parts internally before running them.
+E: An interpreter reads your source code and carries it out while the program runs, without producing a separate finished program first. Python is usually run this way, which makes testing quick but can be slower to run. 'Line by line' is a simplification: real interpreters often convert code to an internal form first.
 Q: What is syntax?
 A: The grammar rules of a language
-E: Syntax is the set of rules for how valid code must be written. A missing bracket or incorrect keyword placement can cause a syntax error before the program does its intended work.
+E: Syntax is the set of rules about how code must be written so the language can understand it: brackets that match, correct keywords, colons and indentation in Python. A syntax error, like a missing closing bracket, stops the program before it runs. It is different from a logic error, where the code runs but does the wrong thing.
 Q: What is a string?
 A: Text data
-E: A string is a sequence of text characters, such as a name or sentence. Strings are used for messages, labels, and other textual data.
+E: A string is a sequence of characters in quotes, such as 'hello' or "Ada Lovelace". Use strings for names, messages, and any text. Beware: the string '5' is text, not the number 5, so '5' + '5' gives '55' in Python, not 10.
 Q: What is an array or list?
 A: An ordered collection of items
-E: A list or array stores multiple values in an ordered sequence. You can access items by their positions; exact resizing and allowed item types depend on the language.
+E: A list keeps several values in order under one name, like fruits = ['apple', 'mango', 'pear']. You reach each item by its position (index), starting from 0, and you can loop through all of them. Details differ by language: Python lists can grow and mix types, while arrays in some languages have a fixed size.
 Q: What is a dictionary (map)?
 A: A collection of key-value pairs
-E: A dictionary stores values under keys rather than relying only on numbered positions. You look up a value using its key, such as a username mapped to an email address.
+E: A dictionary stores each value under a key, so you look things up by meaning instead of by position: user = {'name': 'Ada', 'age': 20}, then user['name'] gives 'Ada'. Keys must be unique. It is the right tool when you need fast lookups like username to email or word to definition.
 Q: What is recursion?
 A: A function that calls itself
-E: Recursion happens when a function calls itself to solve a smaller version of the same problem. A correct recursive function needs a stopping condition, called a base case.
+E: Recursion solves a problem by calling the same function on a smaller piece of it. Example: factorial(n) is n * factorial(n - 1), stopping when n is 1. Every recursive function needs a base case, a point where it stops calling itself; without one it never ends and crashes with a stack overflow.
 Q: What is a class?
 A: A blueprint for creating objects
-E: A class describes the data and behaviour that objects of that type can have. It is a blueprint; creating an object from it is called instantiation.
+E: A class describes what data an object holds (attributes) and what it can do (methods). Example: class Dog with a name and a bark() method. The class itself is only the plan; no dog exists until you create one with Dog('Rex'). One class can produce many separate objects.
 Q: What is an object?
 A: An instance of a class
-E: An object is a particular instance created from a class. It can hold its own data and provide behaviours through methods.
+E: An object is one real thing built from a class. From class Dog you can create d1 = Dog('Rex') and d2 = Dog('Bella'): two objects with their own names, sharing the same blueprint. 'Instance' means exactly this: one particular example made from the class.
 Q: What is a library?
 A: Ready-made code you import and reuse
-E: A library is reusable code written by others that your program can call. It saves you from implementing common features yourself.
+E: A library is a collection of code other people wrote and tested, which you bring into your program with import. Example: import math gives you math.sqrt(16). Using libraries saves time and avoids reinventing common features like dates, networking, or charts.
 Q: What is an IDE?
 A: An editor with tools for writing and running code
-E: An IDE combines a code editor with development tools such as running, debugging, and project navigation. It helps organise the process of building software.
+E: An IDE (integrated development environment) bundles a code editor with tools for running programs, finding errors, debugging step by step, and managing project files. Examples: Android Studio, PyCharm, VS Code (with extensions). It is not required, but it catches typing mistakes early and speeds up work.
 Q: What is a comment?
 A: Text in code that the computer ignores
-E: A comment is text for people reading the code; the language does not execute it as program instructions. Comments can explain why a decision was made or clarify tricky code.
+E: A comment is a note for humans inside the code. In Python it starts with #, and in Kotlin or JavaScript with //. The computer skips it. Good comments explain WHY something is done; they should not just repeat what the code obviously says. You can also comment out a line temporarily to test without it.
 Q: What is an exception?
 A: An error raised while the program runs
-E: An exception is an event that interrupts the normal flow of a program because something went wrong or needs special handling. Code can catch some exceptions and respond safely.
+E: An exception is a problem detected while the program is running, such as dividing by zero or opening a missing file. If nothing handles it, the program stops with an error message. You can handle it with try/except (Python) so the program recovers instead of crashing, for example by asking the user for new input.
 Q: What is scope?
 A: The part of code where a name can be used
-E: Scope describes where a variable or name is visible and can be used. A name created inside a function is usually not directly available outside that function.
+E: Scope decides where a variable can be seen. A variable created inside a function is local to it: using it outside the function causes a NameError. A variable created at the top of the file is global and visible everywhere, but changing globals from inside functions makes bugs hard to find, so prefer passing values in and returning results.
 Q: What is a constant?
 A: A value that should never change
-E: A constant is a name intended to keep the same value throughout the relevant part of a program. Some languages enforce this; in others it is a convention.
+E: A constant is a named value that stays the same while the program runs, like TAX_RATE = 0.075. Using a name instead of repeating the number makes code readable and lets you change it in one place. Some languages enforce it (Kotlin's const val); in Python it is only a convention, usually written in capital letters.
 Q: What is an integer?
 A: A whole number
-E: An integer is a whole number with no fractional part, such as -2, 0, or 15. It is commonly used for counts and positions.
+E: An integer has no fractional part: -3, 0, 42. Use it for counting things such as items, lives, or list positions. Dividing integers may not stay an integer: in Python 7 / 2 gives 3.5, while 7 // 2 gives the whole-number result 3. Python integers can be very large; in many other languages they have a size limit.
 Q: What is a float?
 A: A number with a decimal point
-E: A float represents a number that can have a fractional part, such as 3.5. Floating-point values are approximations for many decimal fractions, so exact decimal comparisons need care.
+E: A float stores numbers with a fractional part, like 3.14 or -0.5. Computers store them in binary, so many decimals are only close approximations: in Python 0.1 + 0.2 gives 0.30000000000000004. Because of this, do not compare floats with ==; and for money, use whole units (cents) or a decimal type.
 Q: What does DRY stand for?
 A: Don't Repeat Yourself
-E: DRY means Don't Repeat Yourself. Instead of copying the same logic in many places, put shared behaviour in a function or reusable component.
+E: DRY is a rule of thumb: if the same logic appears in several places, put it in one function or constant and reuse it. Benefit: when you need to fix or change it, you change one place instead of hunting for every copy and missing one. Do not take it too far, though: forcing unrelated code together just to avoid repetition can make things harder to read.
 Q: What is pseudocode?
 A: A plain-language outline of an algorithm
-E: Pseudocode describes an algorithm in simple, structured language without requiring exact programming syntax. It helps you plan the steps before writing code.
+E: Pseudocode is a plan written in simple English-like steps, not in any real language: for each number in the list, if it is bigger than the biggest so far, remember it. Writing it first helps you think through the logic, and you then translate it into real code. It has no strict rules, so anyone can read it.
 Q: What does LIFO mean (a stack)?
 A: Last in, first out
-E: LIFO means the last item added is the first one removed. A stack behaves like a pile of plates: you take the top plate first.
+E: In a stack the most recently added item is the first to be removed, like plates piled up: you take the top plate. Operations are push (add on top) and pop (remove from top). Real uses: the undo button, the browser back button, and the function call stack that tracks which function is running.
 Q: What does FIFO mean (a queue)?
 A: First in, first out
-E: FIFO means the first item added is the first one removed. A queue behaves like a line of people waiting; the earliest arrival is served first.
+E: In a queue the item that arrived first is served first, like people in a line. Operations are enqueue (join at the back) and dequeue (leave from the front). Real uses: print jobs, messages waiting to be processed, and tasks in order of arrival. The difference from a stack is which end you take from.
 Q: What is Big-O notation?
 A: How running time grows as input grows
-E: Big-O describes how an algorithm's resource use grows as its input gets larger, often focusing on time. It helps compare efficiency without depending on one particular computer.
+E: Big-O describes how the work of an algorithm grows when the input gets bigger, ignoring small details and the speed of the machine. It lets you compare approaches: O(n) means work grows in proportion to the input, O(n squared) means doubling the input roughly quadruples the work. It usually describes the worst case.
 Q: What is the Big-O of binary search?
 A: O(log n)
-E: Binary search takes O(log n) time on sorted data because each comparison cuts the remaining search range roughly in half. The data must be sorted for this method to work.
+E: Binary search looks at the middle of a sorted list and throws away half each time, so even a million items need only about 20 steps. It only works on sorted data. Contrast with scanning one by one (O(n)), which could need a million checks. Logarithmic growth is very slow, which is why it is considered excellent.
 Q: What is the Big-O of looping once through n items?
 A: O(n)
-E: A single pass through n items takes O(n) time because the amount of work grows in proportion to the number of items.
+E: One pass over n items does work proportional to n: ten items need about ten steps, a thousand need about a thousand. This is called linear time. Examples: finding the largest value in a list, or printing every name. Constant extras (like a few setup lines) are ignored in Big-O.
 Q: What is the Big-O of a loop inside a loop over n items?
 A: O(n squared)
-E: If both loops each run about n times, the inner work happens about n × n times, giving O(n²). The exact complexity depends on how the loop bounds behave.
+E: When each of n items is compared with every other item, the work is about n times n. For 1,000 items that is around a million steps, so it slows down quickly as data grows. Example: checking every pair in a list for duplicates. This is why people look for smarter ways, such as using a set, which can bring it down to O(n).
 
 ## Python 1 - basics
 Q: Which function prints to the screen in Python?
 A: print()
-E: print() displays text or other values in the program's output. It is useful for showing results and checking what your code is doing.
+E: print() shows values in the output: print('Hello') displays Hello. You can print several things separated by commas: print('Age:', 20). It adds a new line at the end by default. It is also your simplest debugging tool: print a variable to see what it holds.
 Q: Which function reads text typed by the user?
 A: input()
-E: input() pauses and reads a line of text typed by the user. The returned value is text, even if the user types digits.
+E: input('Your name: ') shows the message, waits for the user to type and press Enter, and gives back what they typed. Store it in a variable: name = input('Your name: '). Common mistake: forgetting that the result is always text, even if the user types a number.
 Q: What type does input() always return?
 A: str
-E: input() returns a string because it reads characters from the keyboard. Convert it with int() or float() when you need to perform numeric calculations.
+E: input() always gives back a string (str), so input() of 5 is the text '5'. Calculating with it fails or behaves strangely: '5' + '5' is '55'. Convert first: age = int(input('Age: ')). If the user types letters, int() raises ValueError, which you can catch with try/except.
 Q: How do you start a comment in Python?
 A: #
-E: A # starts a comment that continues to the end of that line. Python ignores the comment when executing the program.
+E: Everything from # to the end of the line is ignored by Python: x = 5  # starting score. Use comments to explain why you did something. There is no special multi-line comment in Python; you write # at the start of each line (or use a triple-quoted string only as a docstring in functions).
 Q: What does 7 // 2 give?
 A: 3
-E: The // operator performs floor division. It divides and rounds the result down to the next whole-number value, so 7 // 2 is 3.
+E: // is floor division: divide, then round DOWN to a whole number. So 7 // 2 is 3. Careful with negatives: -7 // 2 is -4, because it rounds down, not toward zero. Compare with / which gives 3.5. Typical use: finding how many full groups fit, like minutes // 60 to get hours.
 Q: What does 7 % 2 give?
 A: 1
-E: The % operator gives the remainder after division. Seven divided by two leaves a remainder of one, so it is often used to test even and odd numbers.
+E: % is the modulo operator and gives the remainder after division: 7 divided by 2 is 3 remainder 1. Classic uses: n % 2 == 0 tests for an even number, and n % 10 gives the last digit. If the remainder is 0, the number divides evenly.
 Q: What does 2 ** 3 give?
 A: 8
-E: The ** operator raises the left value to the power on the right. 2 ** 3 means 2 × 2 × 2, which equals 8.
+E: ** is the power operator: 2 ** 3 means 2 x 2 x 2 = 8. Square a number with x ** 2, and take a square root with x ** 0.5. Do not confuse it with ^, which in Python is a different operation (bitwise XOR), not a power.
 Q: What does 7 / 2 give?
 A: 3.5
-E: In Python, / performs true division and returns 3.5 for 7 divided by 2. Use // when you specifically want floor division.
+E: In Python 3 the / operator always does true division and gives a float, even when the result is whole: 6 / 2 is 3.0. Use // if you want whole-number division. This is a common surprise for people who know languages where dividing two integers gives an integer.
 Q: How do you turn "5" into an integer?
 A: int("5")
-E: int() converts suitable text or numeric values into an integer. The quotes mean "5" is text; int("5") turns it into the number 5.
+E: int() converts a value to a whole number: int('5') gives 5 and int(3.9) gives 3 (it cuts off the decimals, it does not round). If the text is not a valid number, such as int('abc'), Python raises ValueError. Use float('3.5') for decimal numbers.
 Q: How do you turn 5 into a string?
 A: str(5)
-E: str() converts a value into its text representation. This is useful when combining a number with text for display.
+E: str() converts any value to text: str(5) gives '5'. You need it when joining a number to a string with +: 'Score: ' + str(5). Without it, Python raises a TypeError. An easier alternative is an f-string: f'Score: {5}'.
 Q: What does "ab" * 3 give?
 A: ababab
-E: Multiplying a string by an integer repeats the string that many times. It produces "ababab"; it does not multiply letters as numbers.
+E: Multiplying a string by a whole number repeats it: 'ab' * 3 gives 'ababab', and '-' * 20 draws a line. The number must be an integer. Trying 'ab' * 'cd' or 'ab' * 2.5 gives a TypeError, because it only makes sense to repeat a whole number of times.
 Q: What does "Hi" + "!" give?
 A: Hi!
-E: The + operator joins strings together, a process called concatenation. Here it combines two pieces of text into "Hi!".
+E: + joins two strings into one new string: 'Hi' + '!' is 'Hi!'. This is called concatenation. Both sides must be strings: 'Age: ' + 20 raises a TypeError, so convert with str(20) or use an f-string. Remember to add spaces yourself: 'Hi' + 'Ada' gives 'HiAda'.
 Q: What does len("hello") return?
 A: 5
-E: len() counts the characters in the string. The word hello has five characters, so the result is 5.
+E: len() counts the characters in a string, including spaces and punctuation: len('hi there') is 8. The same function counts items in lists, tuples, sets, and dictionaries. Handy for checking input length (a password with len(pw) >= 8) or for knowing the last index (len(s) - 1).
 Q: What does "hello".upper() return?
 A: HELLO
-E: upper() creates an uppercase version of the string. It returns a new string and does not change the original string.
+E: upper() returns a NEW string in capitals: 'hello'.upper() gives 'HELLO'. Strings cannot be changed in place, so the original stays the same unless you reassign: word = word.upper(). Related methods: lower(), title(), and capitalize(). A common use is comparing text without caring about case.
 Q: What index is the last item of a list?
 A: -1
-E: Python supports negative indexes: -1 means the last item, -2 the one before it, and so on. This is handy when you do not know the list's length.
+E: A negative index counts from the end: items[-1] is the last item, items[-2] the second to last. This is easier than items[len(items) - 1]. It works on strings and tuples too. On an empty list, items[-1] still raises IndexError.
 Q: What does "hello"[1] return?
 A: e
-E: Square brackets access a character by its zero-based position. Index 1 is the second character, which is e.
+E: Square brackets pick one character by position, and positions start at 0: h is 0, e is 1, l is 2. So 'hello'[1] is 'e'. Asking for a position beyond the end, like 'hello'[10], raises IndexError. Strings cannot be changed by assigning to a position: 'hello'[0] = 'j' is an error.
 Q: What does "hello"[1:3] return?
 A: el
-E: A slice includes the start index but stops before the end index. Positions 1 and 2 are included, so the result is el.
+E: A slice [start:stop] takes characters from start up to but NOT including stop. For 'hello', positions 1 and 2 give 'el'. Leave a side empty to go to the edge: 'hello'[:2] is 'he' and 'hello'[2:] is 'llo'. Slicing never raises an error for out-of-range numbers; it just stops at the end.
 Q: How do you put a variable name inside a string?
 A: f"{name}"
-E: An f-string evaluates expressions inside braces and inserts their values into the text. Define name first, then write f"Hello, {name}".
+E: An f-string starts with f before the quote, and anything in curly braces is replaced by its value: name = 'Ada' then f'Hello, {name}!' gives 'Hello, Ada!'. You can put expressions inside too: f'Total: {price * 2}'. Forgetting the f is a common mistake and prints the braces literally.
 Q: Which keyword means "else if" in Python?
 A: elif
-E: elif checks another condition when the earlier if or elif conditions were false. It lets you test several alternatives in order.
+E: elif checks another condition only if the earlier ones were false. Python goes from top to bottom and runs the FIRST branch that is true, then skips the rest. Example: if score >= 90: A, elif score >= 80: B, else: C. The order matters: put the strictest condition first.
 Q: Which operator tests if two values are equal?
 A: ==
-E: == compares two values for equality and produces True or False. A single = assigns a value to a variable instead.
+E: == compares two values and gives True or False: 5 == 5 is True. A single = is assignment, which stores a value: x = 5. Mixing them up is a classic bug: if x = 5: is a syntax error in Python. To test not-equal use !=.
 Q: What are Python's two boolean values?
 A: True and False
-E: True and False are Python's boolean values, with capital first letters. Conditions and comparisons commonly produce one of them.
+E: Python's booleans are written with a capital first letter: True and False. Writing true or false in lowercase gives a NameError. Comparisons produce them (3 > 2 is True), and if statements use them. You can combine booleans with and, or, and not.
 Q: Which loop goes through a sequence?
 A: for
-E: for is commonly used to visit each item in a sequence, such as every name in a list. The loop body runs once for each item.
+E: A for loop takes each item of a sequence in turn: for name in ['Ada', 'Bo']: print(name). Use it when you know what you are looping over (a list, a string, a range). Strings work too: for ch in 'abc' visits a, b, c. The loop variable (name) takes a new value each round.
 Q: Which loop repeats while a condition is true?
 A: while
-E: while repeats its body as long as its condition remains true. Make sure something can eventually make the condition false, or the loop may never end.
+E: A while loop keeps running its body as long as its condition stays True: while lives > 0: play(). Something inside must eventually make the condition false, or you get an infinite loop (stop it with Ctrl+C). Use while when you do not know how many rounds you need, for example waiting for correct input.
 Q: What does range(3) produce?
 A: 0, 1, 2
-E: range(3) represents the sequence 0, 1, 2. The stop value 3 is excluded, which is why it produces three numbers.
+E: range(3) gives the numbers 0, 1, 2: it starts at 0 and stops BEFORE 3. You can set a start and stop: range(1, 4) gives 1, 2, 3, and a step: range(0, 10, 2) gives 0, 2, 4, 6, 8. It is the usual partner of a for loop to repeat something a fixed number of times.
 Q: Which keyword exits a loop early?
 A: break
-E: break immediately leaves the nearest enclosing loop. It is useful when the result has been found and there is no need to keep looping.
+E: break immediately ends the nearest loop and the program continues after it. Example: loop through names, and when you find 'Ada', break because there is no need to keep searching. It only leaves the innermost loop. Do not confuse it with continue, which only skips the current round.
 Q: Which keyword skips to the next loop round?
 A: continue
-E: continue skips the remaining statements in the current iteration and moves to the next one. The loop itself keeps running.
+E: continue skips the rest of the current round and jumps straight to the next one; the loop itself does not stop. Example: when printing numbers, if n % 2 == 0: continue skips the even ones. Compare with break, which ends the whole loop.
 Q: What does None mean?
 A: No value
-E: None is Python's special value meaning that no value is present. Functions that do not explicitly return something return None.
+E: None is Python's way of saying 'nothing here yet'. A function with no return gives back None, and you can use None as an empty starting value. Check for it with is: if result is None. It is not the same as 0, an empty string, or False, even though all of them are 'empty-looking'.
 Q: Why does indentation matter in Python?
 A: It defines code blocks
-E: Indentation marks which statements belong inside a function, loop, conditional, or other block. Incorrect indentation can change the program's structure or cause an error.
+E: Python uses the spaces at the start of a line to decide which lines belong inside an if, loop, or function. The standard is four spaces per level. If a line has the wrong indentation, you get IndentationError, or worse, the code runs but belongs to the wrong block. Never mix tabs and spaces in the same file.
 Q: What does isinstance(5, int) return?
 A: True
-E: isinstance(value, type) checks whether a value is an instance of a type. Since 5 is an integer, the check returns True.
+E: isinstance(value, type) asks whether a value is of that type: isinstance(5, int) is True and isinstance('5', int) is False. It is handy to check input before using it, for example before doing maths. You can check several types at once: isinstance(x, (int, float)).
 Q: What does round(2.567, 2) return?
 A: 2.57
-E: round(number, digits) rounds a number to the requested number of decimal places. Here it rounds to two places, producing 2.57.
+E: round(number, digits) rounds to the given number of decimal places: two digits from 2.567 gives 2.57. With no second argument it rounds to a whole number: round(2.567) is 3. Beware: Python rounds exact halves to the nearest even number, so round(2.5) is 2 and round(3.5) is 4.
 Q: Is Name the same variable as name?
 A: No, Python is case-sensitive
-E: Python is case-sensitive, so uppercase N and lowercase n are different characters. Name and name are therefore two separate variable names.
+E: Python treats uppercase and lowercase letters as different, so Name, name, and NAME are three separate variables. A typo in capitalisation causes a NameError (the name does not exist). The same applies to keywords: True works, but true does not, and print works, but Print does not.
 
 ## Python 2 - functions and data
 Q: Which keyword sends a value back from a function?
 A: return
-E: return ends the function call and sends a result back to the code that called it. The caller can store that result or use it in another expression.
+E: return ends the function and hands a value back to the caller: def add(a, b): return a + b, then total = add(2, 3) stores 5. Code after a return line in the same path never runs. Common mistake: printing inside the function instead of returning, which gives you nothing to store or reuse.
 Q: What does a function return if it has no return line?
 A: None
-E: If a function finishes without returning a value, Python returns None automatically. Printing something is not the same as returning it.
+E: If a function finishes without a return statement (or with a bare return), Python hands back None. So result = print('hi') makes result None, because print only displays text. If you try to use that value in maths, you get a TypeError. This is the clue when a variable unexpectedly turns out to be None.
 Q: How do you give a parameter a default value?
 A: def f(x=1)
-E: A default value is written in the function definition, such as def greet(name="friend"). The caller can omit that argument and Python uses the default.
+E: Write the default in the definition with =: def greet(name='friend'). Calling greet() uses 'friend', and greet('Ada') uses 'Ada'. Parameters with defaults must come after those without. Warning: never use a list or dictionary as a default (def f(items=[])), because it is shared between calls and surprises you; use None and create the list inside.
 Q: What does *args collect?
 A: Extra positional arguments in a tuple
-E: *args collects extra positional arguments into a tuple. It is useful when a function should accept a flexible number of unnamed inputs.
+E: A parameter written *args gathers any extra unnamed arguments into a tuple, so the function accepts any number of them: def total(*args): return sum(args), then total(1, 2, 3) gives 6. The name args is just a convention; the star is what matters. Use it when you do not know how many values will be passed.
 Q: What does **kwargs collect?
 A: Extra keyword arguments in a dict
-E: **kwargs collects extra keyword arguments into a dictionary. Each keyword becomes a key and its supplied value becomes the dictionary value.
+E: **kwargs gathers extra named arguments into a dictionary: def show(**kwargs): print(kwargs), then show(name='Ada', age=20) prints {'name': 'Ada', 'age': 20}. The names become keys. It is useful for functions that accept optional settings. Order in a definition: normal parameters, *args, then **kwargs.
 Q: How do you write a lambda that doubles x?
 A: lambda x: x * 2
-E: A lambda creates a small anonymous function in one expression. lambda x: x * 2 takes x as input and returns twice its value.
+E: A lambda is a tiny nameless function written on one line: lambda x: x * 2 is the same as def double(x): return x * 2. It can only contain one expression and the result is returned automatically. Most often used as a quick argument, such as sorted(words, key=lambda w: len(w)). For anything longer, write a normal def.
 Q: How do you make an empty list?
 A: []
-E: Square brackets create a new empty list. You can add items later, for example with append().
+E: [] creates a new empty list; list() does the same. Start with an empty list when you will collect items in a loop: results = [] then results.append(x). Remember that [] is a list, while {} is a dictionary and () is an empty tuple.
 Q: Which method adds an item to the end of a list?
 A: append()
-E: append(value) changes the existing list by placing one item at the end. It modifies the list in place rather than returning a new list.
+E: items.append(x) adds one item at the end and changes the list itself. It returns None, so writing items = items.append(x) wipes your list: a common bug. To add several items at once use extend(): items.extend([1, 2]). To insert somewhere else use insert(position, x).
 Q: Which method removes and returns the last item?
 A: pop()
-E: pop() removes the final item and gives that item back to you. You can also pass an index to remove an item from another position.
+E: items.pop() removes the last item AND gives it back to you, so you can store it: last = items.pop(). Give an index to remove another position: items.pop(0) removes the first. On an empty list it raises IndexError. Together with append(), pop() lets a list work as a stack.
 Q: Which method removes the first matching value?
 A: remove()
-E: remove(value) searches for the first item equal to that value and removes it. It raises ValueError if the value is not present.
+E: items.remove('x') looks for the first item equal to 'x' and deletes it; any later copies stay. It removes by value, not by position (for position use pop or del). If the value is not in the list it raises ValueError, so check with if 'x' in items first.
 Q: Which method sorts a list in place?
 A: sort()
-E: sort() rearranges the original list into sorted order. Because it changes the list itself, it returns None rather than a new sorted list.
+E: items.sort() rearranges the list itself, smallest to largest, and returns None. So items = items.sort() is a classic bug that leaves items as None. Use items.sort(reverse=True) for descending order, or key=len to sort by length. Use sorted() when you want a new list instead.
 Q: Which function returns a new sorted list?
 A: sorted()
-E: sorted(sequence) creates and returns a new sorted list, leaving the original sequence unchanged. Use it when you want to preserve the original order.
+E: sorted(items) gives you a new sorted list and leaves the original untouched, and it works on any collection (a string gives a list of letters, a dictionary gives sorted keys). It takes the same reverse and key options as sort(). Choose sorted() when you still need the original order.
 Q: Are lists mutable?
 A: Yes
-E: Mutable means an object can be changed after it is created. Lists are mutable, so you can add, remove, or replace their items.
+E: Mutable means the object can be changed after it is created: you can add, remove, and replace list items. One trap: b = a does not copy a list, both names point to the same list, so changing b changes a. Make a real copy with a.copy() or a[:].
 Q: Are tuples mutable?
 A: No
-E: Tuples are immutable: their stored sequence cannot be changed after creation. They are useful for fixed groups of values.
+E: A tuple cannot be changed after creation: point = (3, 4), and point[0] = 5 raises TypeError. Use tuples for fixed groups such as coordinates or a date, and they can be dictionary keys because they never change. A one-item tuple needs a comma: (5,). A tuple containing a list still lets that inner list change.
 Q: How do you make an empty dict?
 A: {}
-E: {} creates an empty dictionary, which stores key-value pairs. Use dict() as another way to create one; set() is used for an empty set.
+E: {} creates an empty dictionary, and dict() does the same. Fill it with keys: scores = {}, then scores['Ada'] = 90. Look up with scores['Ada']. Remember that {} is NOT an empty set; use set() for that. Keys must be unique and unchangeable types like strings, numbers, or tuples.
 Q: Which dict method gets a value without a KeyError?
 A: get()
-E: get(key) returns the value for a key, or None (or a default you provide) if the key is missing. Normal indexing with dict[key] raises KeyError when absent.
+E: d['x'] raises KeyError when the key is missing, but d.get('x') returns None instead, and d.get('x', 0) returns your own default, 0. This is perfect for counting: counts[word] = counts.get(word, 0) + 1. You can also test with if 'x' in d first.
 Q: Which dict method loops over keys and values together?
 A: items()
-E: items() provides key-value pairs, so a loop can unpack both: for key, value in data.items().
+E: d.items() gives (key, value) pairs, so you can unpack both in a for loop: for name, score in scores.items(): print(name, score). Related methods: keys() for just the keys and values() for just the values. Looping over the dictionary directly gives only the keys.
 Q: What does a set not allow?
 A: Duplicate items
-E: A set stores unique elements, so adding a duplicate does not create a second copy. Sets are useful for removing duplicates and membership tests.
+E: A set keeps only unique items and ignores repeats: set([1, 2, 2, 3]) becomes {1, 2, 3}. It has no order and no indexes. Its superpowers are removing duplicates and very fast membership tests (x in my_set). You can also combine sets: a | b (union), a & b (what both share).
 Q: How do you make an empty set?
 A: set()
-E: set() creates an empty set. The braces {} create an empty dictionary, not an empty set.
+E: set() creates an empty set. The braces {} create an empty dictionary, so {} is a trap here. A set with items does use braces: {1, 2, 3}. Add items with add(): s.add(4). Adding an item that is already inside changes nothing.
 Q: What does [x*x for x in range(3)] give?
 A: [0, 1, 4]
-E: This is a list comprehension: it builds a new list by evaluating x*x for each x in range(3). The inputs are 0, 1, and 2, so the squares are 0, 1, and 4.
+E: A list comprehension builds a list in one line: for each x in range(3), which is 0, 1, 2, compute x*x. It is shorthand for a loop with append. You can add a filter at the end: [x for x in range(10) if x % 2 == 0] gives the even numbers. Keep them simple; if it gets long, use a normal loop.
 Q: Which string method splits text into a list?
 A: split()
-E: split() breaks a string into pieces using whitespace by default, or a separator you provide. It returns a list of the pieces.
+E: 'a b c'.split() gives ['a', 'b', 'c']: with no argument it splits on any whitespace. Give a separator to split on something else: 'a,b,c'.split(',') gives the same list. It is how you turn a sentence into words or a line of CSV into fields. The result is always a list of strings.
 Q: Which string method joins a list into one string?
 A: join()
-E: join() combines strings from an iterable with the chosen separator between them. For example, ", ".join(names) separates names with commas.
+E: join is called on the separator: ', '.join(['a', 'b', 'c']) gives 'a, b, c', and ''.join(letters) glues letters with nothing between them. All items must already be strings; join a list of numbers with ', '.join(str(n) for n in nums). It is the reverse of split().
 Q: Which string method removes spaces from both ends?
 A: strip()
-E: strip() removes leading and trailing whitespace by default. It does not remove spaces from the middle of the text.
+E: strip() removes whitespace (spaces, tabs, new lines) from the start and end only: '  hi  '.strip() gives 'hi'. Spaces in the middle stay. Pass characters to remove those instead: 'xxhixx'.strip('x') gives 'hi'. Very useful on text typed by users, for example name = input().strip().
 Q: Which keyword checks if an item is in a list?
 A: in
-E: in tests membership and returns True if the item is present. It can also be used with strings, sets, dictionaries, and other collections.
+E: x in items gives True or False: 'Ada' in names. It also checks if a key is in a dictionary, a character or substring is in a string ('ell' in 'hello' is True), or an item is in a set. Add not for the opposite: x not in items. It is also the keyword in for loops, with a different job.
 Q: How do you open a file safely for reading?
 A: with open("f.txt") as f:
-E: with open(...) creates a context manager that closes the file automatically when the block ends, even if an error occurs. The default mode is reading text.
+E: with open('f.txt') as f: then indent your code, for example text = f.read(). The with block closes the file automatically when it ends, even if an error happens, so you never forget f.close(). Reading is the default mode. If the file does not exist you get FileNotFoundError, which you can catch with try/except.
 Q: Which file mode writes (and overwrites)?
 A: "w"
-E: The w mode opens a file for writing and replaces its existing contents. Be careful: opening an existing file this way erases its old content.
+E: open('f.txt', 'w') opens for writing and ERASES everything already in the file the moment it opens, or creates the file if it does not exist. Use it when you want a fresh file. If you only want to add to what is there, use 'a' instead. Write text with f.write('text'), and add \n yourself for new lines.
 Q: Which file mode adds to the end?
 A: "a"
-E: The a mode opens a file for appending. New content is added at the end rather than replacing what is already there.
+E: open('f.txt', 'a') opens for appending: new text goes at the end and the old content stays. It creates the file if needed. Perfect for logs or saving scores one by one. Compare with 'w', which wipes the file first. Remember to add \n so each entry starts on its own line.
 Q: Which pair of keywords catches errors?
 A: try and except
-E: try marks code that may raise an exception, and except handles a matching exception if one occurs. This lets a program recover or show a useful message.
+E: Put risky code in try and the recovery plan in except: try: n = int(text) except ValueError: print('Not a number'). The program carries on instead of crashing. Catch specific errors (ValueError, FileNotFoundError) rather than everything, otherwise you hide real bugs. Only the matching exception type is caught.
 Q: Which block always runs after try?
 A: finally
-E: finally runs whether the try block succeeds or an exception occurs. It is commonly used for cleanup that must happen either way.
+E: finally runs no matter what: after a successful try, after a handled error, even when the error is not caught or a return happens. Use it for cleanup that must always occur, like closing a connection. Structure: try, then except, then finally. For files, with open(...) is usually simpler.
 Q: Which keyword raises an error yourself?
 A: raise
-E: raise deliberately triggers an exception. It is useful when a function detects an invalid situation and needs to report it to its caller.
+E: raise creates an exception on purpose: if age < 0: raise ValueError('Age cannot be negative'). Use it when a function receives something invalid and cannot continue, so the caller finds out immediately. Choose a fitting error type and a clear message. The caller can handle it with try/except.
 Q: Which keyword brings in a module?
 A: import
-E: import makes names from a module available to your code. Modules group related functions, classes, and values so they can be reused.
+E: import makes a module's tools available: import math, then math.sqrt(9). Variants: from math import sqrt lets you write sqrt(9) directly, and import numpy as np gives a short nickname. Python's standard library has many modules ready to use (random, datetime, json). A missing module gives ModuleNotFoundError.
 Q: Which command installs a package?
 A: pip install
-E: pip is Python's package installer. Running pip install followed by a package name downloads and installs that package into the selected Python environment.
+E: pip install requests, typed in the terminal (not inside Python code), downloads a package from the Python Package Index and installs it for you to import. Packages are third-party libraries; the standard library does not need pip. If pip is not found, try python -m pip install. Use pip list to see what is installed.
 Q: What is the name of a class's constructor method?
 A: __init__
-E: __init__ runs when a new instance is initialised. It commonly assigns starting values to the object's attributes; technically, __new__ creates the instance.
+E: __init__ runs automatically when you create an object and sets up its starting data: class Dog: def __init__(self, name): self.name = name. Then d = Dog('Rex') calls it and d.name is 'Rex'. The double underscores on both sides are required. It does not return a value; it only prepares the new object.
 Q: What does self refer to in a method?
 A: The current object
-E: self refers to the particular object whose method is running. It lets the method read or change that object's attributes.
+E: self is the object that the method was called on. When you call d.bark(), Python passes d in as self, so the method can use self.name to read that particular dog's data. It must be the first parameter of every method in a class, but you do not pass it yourself when calling. Forgetting self gives a confusing TypeError about arguments.
 Q: What does enumerate() give you?
 A: Index and item pairs
-E: enumerate() pairs each item with its index while looping. It avoids manually maintaining a counter.
+E: enumerate() lets a for loop have both the position and the item without a manual counter: for i, name in enumerate(names): print(i, name). By default counting starts at 0; use enumerate(names, start=1) for a numbered list. It is neater than for i in range(len(names)).
 Q: What does zip() do?
 A: Pairs up items from several sequences
-E: zip() combines corresponding items from multiple iterables into tuples. By default it stops when the shortest iterable runs out.
+E: zip(names, scores) pairs the first name with the first score, the second with the second, and so on. Use it in a loop: for n, s in zip(names, scores). It stops at the shortest sequence, silently ignoring extra items in longer ones. Wrap it in list() to see the pairs, or in dict() to build a dictionary.
 
 ## Web basics 1 - HTML and CSS
 Q: Which HTML tag makes the biggest heading?
 A: h1
-E: h1 represents the top-level heading of a page or section. Headings describe document structure; choose them by meaning, not just by their visual size.
+E: <h1> is the top-level heading; h2 to h6 are smaller levels below it. The sizes are only the browser default: the real purpose is meaning and structure, which also helps search engines and screen readers. Good practice: use one h1 per page for the main title, then h2 for sections, and do not skip levels just to get a different size (use CSS for that).
 Q: Which tag makes a paragraph?
 A: p
-E: p marks a paragraph of text. Browsers treat it as a block of prose and apply default spacing around it.
+E: <p>text</p> marks a paragraph. Browsers add space before and after it and wrap long text to fit the screen. Extra spaces or line breaks you type in the HTML file are collapsed into one space, so use separate p tags for separate paragraphs, and <br> only for a forced line break inside one.
 Q: Which tag makes a link?
 A: a
-E: a creates a hyperlink. Put the destination in its href attribute and place the clickable text between the opening and closing tags.
+E: <a href='https://example.com'>Click here</a> makes a link: the text between the tags is what people click, and href says where it goes. Add target='_blank' to open a new tab. Link text should describe the destination ('Read the guide') rather than just 'click here'. 'a' stands for anchor.
 Q: Which attribute holds a link's address?
 A: href
-E: href specifies the destination of a link. It can point to another page, a section, an email address, or another supported resource.
+E: href (hypertext reference) goes inside the a tag and holds the destination: a full web address, a page in your own site (about.html), a section on the same page (#contact), or even mailto:someone@example.com. A missing or wrong href makes a dead link, and a link without href is not clickable.
 Q: Which tag shows an image?
 A: img
-E: img embeds an image in the page. It is a void element, so it does not need a closing </img> tag.
+E: <img src='cat.png' alt='A sleeping cat'> shows a picture. It has no closing tag because it has no content. Always include alt, a short description: it appears if the image fails to load and is read aloud to people using screen readers. Set width and height (or control them with CSS) so the page does not jump while loading.
 Q: Which attribute holds the image file?
 A: src
-E: src tells the browser where to find the image resource. The value can be a relative file path or a URL.
+E: src (source) tells the browser which file to load: a path such as images/cat.png or a full URL. If the picture does not appear, the usual cause is a wrong path or file name; remember that file names are often case-sensitive online (Cat.png is not cat.png). The same attribute is used on script tags and some others.
 Q: Which tag makes an unordered (bullet) list?
 A: ul
-E: ul groups list items where order is not important. Put each bullet inside its own li element.
+E: <ul> wraps a bullet list, and each bullet is an <li> inside it: <ul><li>Milk</li><li>Eggs</li></ul>. Use it when the order does not matter, like a shopping list or a navigation menu. Only li elements should be direct children of ul. CSS can change the bullet style or remove the bullets entirely.
 Q: Which tag makes a list item?
 A: li
-E: li represents one item inside an ordered or unordered list. The parent ol or ul determines how the list is presented.
+E: <li> is one entry in a list, and it must sit inside a <ul> or <ol>. Its marker (bullet or number) comes from the parent. An li can contain text, links, images, or even another whole list, which is how nested lists are made. An li outside a list is invalid HTML.
 Q: Which tag makes an ordered (numbered) list?
 A: ol
-E: ol groups list items in a meaningful sequence, commonly displayed with numbers. Use it for steps or rankings where order matters.
+E: <ol> wraps a numbered list; the numbers are added automatically, so inserting an item renumbers everything: great for steps in a recipe or ranking. Options: start='5' begins at 5, reversed counts down, and type can switch to letters or Roman numerals. Each entry is an li, just like in ul.
 Q: Which tag is a generic block container?
 A: div
-E: div is a generic block-level container used to group content for layout or styling. Prefer meaningful elements such as main, section, or article when they describe the content better.
+E: <div> is an empty box with no meaning of its own. It starts on a new line and fills the full width, so it is used to group elements for layout and styling (give it a class and style it with CSS). When a more meaningful tag exists (header, nav, main, section, footer), use that instead, because it helps accessibility.
 Q: Which tag is a generic inline container?
 A: span
-E: span groups a small piece of text or other inline content without creating a new block. It is often used to apply a style to part of a sentence.
+E: <span> wraps part of a line of text without breaking the line, so you can style a few words: <p>Price: <span class='sale'>$5</span></p>. It has no meaning and no default look until you add CSS. The difference from div: div is a block (new line), span is inline (stays in the sentence).
 Q: Which tag makes a button?
 A: button
-E: button creates an interactive control that a user can activate. Use it for actions, and choose the button type deliberately when it is inside a form.
+E: <button>Save</button> makes a clickable control that triggers an action, usually with JavaScript (an onclick or event listener). Inside a form it submits the form by default; set type='button' if you do not want that. Use button for actions and a for navigation to another page.
 Q: Which tag makes a text box or checkbox?
 A: input
-E: input creates form controls, with the type attribute choosing the kind, such as text, checkbox, or email. Different types provide different behaviours and validation.
+E: <input> makes a form control and has no closing tag. The type attribute picks the kind: text, password, email, number, checkbox, radio, and more. Add name so the data can be sent, placeholder for a hint, and use a label tag so people know what to type. The wrong type makes mobile keyboards and validation worse.
 Q: Which tag groups form fields?
 A: form
-E: form groups controls that collect and submit user input. Its action and method attributes can describe where and how the data is submitted.
+E: <form> wraps the inputs and the submit button, and decides what happens on submit. Attributes: action is where the data goes and method is how (GET puts it in the address, POST sends it in the request body, which is better for passwords). A button of type submit inside the form triggers the send.
 Q: Which tag holds metadata and the title?
 A: head
-E: head contains information about the document, such as its title, character encoding, and linked stylesheets. Its contents are generally not displayed as the page's main content.
+E: <head> contains information ABOUT the page that is not shown in the page area: <title> (the tab text), <meta charset='utf-8'> (correct letters including Arabic), the viewport setting for phones, and links to CSS. It comes before <body> inside the html tag.
 Q: Which tag holds the visible page?
 A: body
-E: body contains the page content that appears in the browser, such as headings, paragraphs, images, and controls.
+E: <body> contains everything the visitor sees: headings, text, images, links, forms, and so on. A page has exactly one body, placed after the head inside <html>. Styles on body, such as background colour or font, are inherited by most elements inside it.
 Q: Which tag makes a table row?
 A: tr
-E: tr represents one row in an HTML table. It contains header cells or data cells.
+E: <tr> is one horizontal row, and it sits inside <table> (or <thead>/<tbody>). Inside it you put cells: <td> for data or <th> for headers. A table is built row by row, so the number of cells in each row decides the columns. Tables are for data, not for page layout.
 Q: Which tag makes a table cell?
 A: td
-E: td represents a regular data cell inside a table row. Use th for a header cell that labels a row or column.
+E: <td> is one data cell inside a tr. Use <th> for header cells (bold and centered by default, and meaningful to screen readers). A cell can span several columns with colspan='2' or rows with rowspan='2'. Putting a td directly inside table without a tr is invalid.
 Q: Which CSS property sets text color?
 A: color
-E: color sets the foreground colour of text. It is separate from background-color, which changes the area behind the text.
+E: color: red; changes the text colour of the element and the elements inside it. You can write a name (red), a hex code (#ff0000), rgb(255, 0, 0), or hsl. Do not confuse it with background-color, which colours the area behind. Make sure text and background have enough contrast to be readable.
 Q: Which CSS property sets the background?
 A: background
-E: background is a shorthand property for several background settings, including colour and images. Use background-color when you only need to set a solid colour.
+E: background is a shorthand that can set colour, image, position, and repeat at once: background: #eee url(bg.png) no-repeat;. When you only want a colour, background-color: #eee; is clearer. Be careful: the shorthand resets any background property you did not mention.
 Q: Which CSS property sets space inside an element's border?
 A: padding
-E: padding adds space between an element's content and its border. Increasing padding makes the content sit farther from the edge inside the element.
+E: padding is the breathing room between an element's content and its own border, and the background colour fills it. padding: 10px; adds 10px on all four sides, while padding: 10px 20px; means 10px top and bottom, 20px left and right. Use it to stop text touching the edge of a box or button.
 Q: Which CSS property sets space outside an element's border?
 A: margin
-E: margin creates space outside an element, separating it from neighbouring elements. Unlike padding, it is outside the border.
+E: margin is the empty space outside an element's border, pushing other elements away. It is transparent (no background). margin: 0 auto; centres a block with a set width horizontally. Vertical margins between neighbouring blocks can collapse into the larger one instead of adding up. Remember: padding is inside, margin is outside.
 Q: Which CSS property sets font size?
 A: font-size
-E: font-size controls how large text is rendered. Relative units such as rem can help text scale consistently across the page.
+E: font-size: 16px; sets the size of text. Prefer relative units (rem or em) so text scales if the user changes their browser settings: 1rem is the root size, usually 16px. Using percentages works too. Avoid tiny text on phones; around 16px is a comfortable minimum for body text.
 Q: Which CSS selector picks an element by id?
 A: #name
-E: #name selects the element whose id attribute is name. An id should be unique within a page.
+E: A hash selects the element with that id: #header { color: red; } styles <div id='header'>. An id must be unique in the page, so it targets exactly one element, and the same id is used for in-page links (#header). For styling several elements, prefer classes. IDs also take priority over classes when rules conflict.
 Q: Which CSS selector picks elements by class?
 A: .name
-E: .name selects every element whose class list includes name. Classes can be reused on many elements.
+E: A dot selects every element with that class: .card { padding: 10px; } styles all <div class='card'>. An element can have several classes (class='card big') and the same class can be reused anywhere, which makes classes the main tool for styling. Do not forget the dot in CSS but leave it out in the HTML attribute.
 Q: Which CSS value makes a flexible row layout?
 A: display: flex
-E: display: flex turns an element into a flex container. Its children become flex items, which can be aligned and distributed along a row or column.
+E: display: flex on a parent turns its direct children into flex items arranged in a row. Then control them with justify-content (spread along the row), align-items (alignment across), gap (space between), and flex-direction: column to stack them. flex-wrap: wrap lets items move to a new line. It replaces many old layout hacks.
 Q: Which CSS property rounds corners?
 A: border-radius
-E: border-radius rounds an element's corners. Larger values create more rounded corners, and a large enough value can make a pill or circle.
+E: border-radius: 8px; rounds an element's corners; a bigger number makes rounder corners. border-radius: 50%; turns a square into a circle (or a rectangle into an oval). You can give different values for each corner: border-radius: 10px 0 10px 0;. It also rounds the background and clips image corners when used with overflow: hidden.
 Q: Which CSS feature changes styles by screen size?
 A: Media queries
-E: Media queries apply CSS only when a condition is met, such as a minimum screen width. They are a key tool for responsive layouts.
+E: A media query applies styles only when a condition is true: @media (max-width: 600px) { .menu { display: none; } } changes things on narrow screens like phones. It is the base of responsive design. Common approach: write the phone layout first, then add @media (min-width: 768px) rules for larger screens. Do not forget the viewport meta tag in the head.
 Q: What is the box model?
 A: Content, padding, border, margin
-E: The box model explains the space an element occupies: content, padding, border, and margin. Understanding it helps you predict sizing and spacing.
+E: Every element is a rectangular box built from four layers, from inside out: content, padding, border, margin. By default width only measures the content, so a 200px box with 20px padding and a 5px border ends up 250px wide. Add box-sizing: border-box; so that width includes padding and border: much easier to plan layouts.
 Q: Which HTML tag links an external CSS file?
 A: link
-E: link connects the document to an external resource, commonly a stylesheet in the head. Set rel="stylesheet" and put the file path in href.
+E: Put <link rel='stylesheet' href='style.css'> inside <head> to load styles from a separate file. rel says what kind of link it is and href gives the file path. One CSS file can style many pages, and the browser can cache it. Like img, link has no closing tag. A wrong path means no styling at all.
 Q: Which tag adds JavaScript?
 A: script
-E: script loads or contains JavaScript for a page. Use src for an external file, and consider defer when a script should run after the document is parsed.
+E: <script src='app.js'></script> loads an external JavaScript file, or you can write code between the tags. Placing it at the end of body, or adding the defer attribute in the head, makes sure the page elements exist before the code runs. Many beginner errors come from a script running before the HTML it needs has loaded.
